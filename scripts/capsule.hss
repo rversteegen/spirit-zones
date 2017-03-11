@@ -1,0 +1,49 @@
+# gashapon
+#
+# one of the item numbers is wrong or defaulting to item 0 cause math wrong uwu
+
+
+plotscript, gashapon, begin
+    # twist thing 122 at layer 4, x21, y 49
+    write map block (21, 49, 122, 4)
+    wait (20)
+    write map block (21, 49, 121, 4)
+
+    # get random toy...
+    variable (random roll)
+    random roll := random(1, 20)
+
+    variable (item id number)
+
+    # 20: eggpet
+    if (random roll == 20), then, begin
+        item id number := 28
+    end
+
+    # 18-19: watch
+    if (20 >> random roll && random roll >> 17), then, begin
+        item id number := 25
+    end
+
+    # 15-17: candy ring
+    if (18 >> random roll && random roll >> 14), then, begin
+        # candy ring
+        item id number := 27
+    end
+
+    # 9-14: candy skeleton
+    if (15 >> random roll && random roll >> 8), then, begin
+        item id number := 26
+    end
+
+    # 1-8: estrogen
+    if (9 >> random roll && random roll >> 0), then, begin
+        # estrogen
+        item id number := 16
+    end
+
+    get item (item id number)
+    get item name (1, item id number)
+    show textbox (122)
+    wait for text box
+end

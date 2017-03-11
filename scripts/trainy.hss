@@ -1,0 +1,351 @@
+# Uses global variables 999-1006 (if I've done my math right, heh).
+
+# Train Pachisi
+# A minigame by SlimeMaid
+#
+# Special thanks to HarlockAndTonic and SDHawk
+# on EsperNet #slimesalad.
+#
+# A clone of Dragon Warrior III minigame, "pachisi."
+#
+# You have a dice, a train, train track, a starting point
+# and an ending point. Each "turn" the player rolls the
+# die and the number is how many spaces the train may go.
+#
+# You get x rolls. You can try to pickup loot from all the
+# special tiles along the track, but if you run out of
+# rolls before you get to the yellow tile you lose
+# everything!
+#
+
+
+###################
+# Move Path (Array)
+###################
+#
+# This section is devoted to the "move path," which is a list
+# composed of directions, i.e., the globals UP, DOWN, RIGHT, and
+# LEFT, respectively. This list represents the steps a player has
+# made, it cannot exceed six in length, for that is the maximal
+# die roll (which in turn represents how many steps the player may
+# make).
+#
+# Records the builtin constants: up (0), down (2), left (3), right (1).
+#
+# Should never exceed six elements...
+
+
+define constant (1000, array:step history)
+global variable (999, step history length)
+
+
+script, get opposite direction, direction, begin
+
+    if (direction == up), then, begin
+        return (down)
+    end
+
+    if (direction == down), then, begin
+        return (up)
+    end
+
+    if (direction == right), then, begin
+        return (left)
+    end
+
+    if (direction == left), then, begin
+        return (right)
+    end
+
+end
+
+
+script, get history step, step number, begin
+    # Get the nth step made.
+    #
+    # Arguments:
+    #   step number (int) the numberth step to get.
+    #
+    # Returns: UP, DOWN, LEFT, or RIGHT.
+
+    return ( read global (array: step history + step number) )
+end
+
+
+script, reset step history, begin
+    step history length := 0
+end
+
+
+script, show rolls left, rolls left, begin
+    variable (moves left text)
+    moves left text := 5
+    $moves left text = "Rolls Left: "
+    append number(moves left text, rolls left)
+    string color(moves left text, 30 + rolls left)
+    show string at (moves left text, 0, 0)
+end
+
+
+script, show points, points, begin
+    variable (points text)
+    points text := 6
+    $points text = "Points: "
+    append number(points text, points)
+    string color(points text, 30)
+    show string at (points text, 0, 10)
+end
+
+
+script, array debugger, begin
+  variable(i, str)
+  for(i, 0, step history length) do(
+    str := 5+i # start with string ID 5
+    $str="array("
+    append number(str, i)
+    $str+") = "
+    append number(str, get history step(i))
+    string color(str, random(1, 15)) # make the string flash colorfully
+    show string at(str, 0, i * 10)
+  )
+
+  # set a timer to run this script again on the next tick
+  # without interrupting any other scripts
+  set timer(0, 0, 1, @array debugger)
+end
+
+
+# Move Path/Last Step
+# -------------------
+#
+# here last step works on principle that current/newest step
+# player made hasn't been recorded yet. last step is useful
+# for checking if player is moving back to a tile they've
+# already been.
+#
+# You effectively move back to deciding which direction the
+# step is.
+
+
+script, get last step, begin
+    variable (element number)
+    element number := step history length -- 1
+    return ( read global (array: step history + element number) )
+end
+
+
+script, undo last step, begin
+    step history length -= 1
+end
+
+
+script, append step, step to add, begin
+    write global (array: step history + step history length, step to add)
+    step history length += 1
+end
+
+
+#################################
+# Actual Minigame Logic (Runtime)
+#################################
+
+
+script, get direction from key, key pressed, begin
+
+    if (key pressed == key:Up), then, begin
+        return (up)
+    end
+
+    if (key pressed == key:Down), then, begin
+        return (down)
+    end
+
+    if (key pressed == key:Left), then, begin
+        return (left)
+    end
+
+    if (key pressed == key:Right), then, begin
+        return (right)
+    end
+
+end
+
+
+script, handle direction, direction, original die roll, steps left, begin
+    # Handle a direction being pressed.
+
+    # The opposite direction of the latest direction in the move path
+    # allows us to test if we moved in one direction and then back,
+    # so we can regain steps by backtracking.
+    variable (last step opposite)
+    last step opposite := get opposite direction (get last step())
+
+    # If there's a wall in the direction that was pressed, we just ignore
+    # the keypress all together.
+    if (not (check NPC wall (0, direction)) ), then, begin
+
+        # Either the steps left (die roll) is greater than 0, meaning
+        # there are steps left, or the last step made is the opposite 
+        if ( (steps left >> 0) || (direction == last step opposite) ), then, begin
+            walk NPC (0, direction)
+            wait for NPC (0)
+
+            if (direction == last step opposite && not(step history length == 0)), then, begin
+                steps left += 1
+                undo last step ()
+            end, else, begin
+                steps left += -1
+                append step (direction)
+            end
+
+        end
+
+    end
+
+    return (steps left)
+
+end
+
+
+script, update die npc, die npc, die roll, begin
+
+
+    if (die roll == 1), then, begin
+        set NPC direction (die npc, up)
+        set npc frame (die npc, 0)
+    end
+
+    if (die roll == 2), then, begin
+        set NPC direction (die npc, up)
+        set npc frame (die npc, 1)
+    end
+
+    if (die roll == 3), then, begin
+        set NPC direction (die npc, right)
+        set npc frame (die npc, 0)
+    end
+
+    if (die roll == 4), then, begin
+        set NPC direction (die npc, right)
+        set npc frame (die npc, 1)
+    end
+
+    if (die roll == 5), then, begin
+        set NPC direction (die npc, down)
+        set npc frame (die npc, 0)
+    end
+
+    if (die roll == 6), then, begin
+        set NPC direction (die npc, down)
+        set npc frame (die npc, 1)
+    end
+
+end
+
+
+# limit to # of rolls, show num
+plotscript, boardgame, begin
+    suspend player
+    set NPC obstructs (0, false)
+    variable (rolls left, points, point npcs)
+    rolls left := 15
+    points := 0
+
+    while (rolls left), do, begin
+        show rolls left (rolls left)
+        show points (points)
+        boardgame turn ()
+
+        rolls left -= 1
+        point npcs := NPC at spot (NPC X (0), NPC Y (0), 1)
+        if (point npcs <> false), then, begin
+            points += 1
+            destroy NPC (point npcs)
+        end
+        # if the tile under the npc is a harm tile, we add a point
+        #if (read pass block (NPC X (0), NPC Y (0)),and,harm tile), then, begin
+        #    points += 1
+        #end
+        wait (1)
+    end
+
+    hide string (5)
+    hide string (6)
+
+    if (read pass block (NPC X (0), NPC Y (0)),and,vehicle A), then, begin
+        get money (points * 2)
+        $1 = ""
+        append number(1, points)
+        $2 = ""
+        append number(2, points * 2) 
+        show textbox(42)  # tell player what they won
+    end, else, begin
+        show textbox(43)
+    end
+
+    resume player
+    use door(1)
+end
+
+
+script, boardgame turn, begin
+
+    variable (move confirmed)
+    move confirmed := 0  # should be a boolean
+
+    # the dice is rolled, stored in variable "diceroll", the appropriate dice face is displayed, moveconfirmed set to 0, 
+    variable(original die roll)
+    original die roll := random(1, 6)
+    variable(steps left)
+    steps left := original die roll
+
+
+    variable (die npc)
+    die npc := create NPC (1, 5, 5, left)
+
+    set npc frame (die npc, 0)
+    wait (5)
+    set npc frame (die npc, 1)
+    wait (5)
+
+    update die npc (die npc, original die roll)
+
+    #now we are waiting for input with a loop that runs until the move is confirmed
+
+    while (move confirmed == 0), do, begin
+        #array debugger ()
+
+        # run "up" cycle
+        if (keyval(key:Up) == 3), then, begin
+            steps left := handle direction (up, original die roll, steps left)
+        end
+
+        # run "down" cycle
+        if (keyval(key:Down) == 3), then, begin
+            steps left :=  handle direction (down, original die roll, steps left)
+        end
+
+        # run "left" cycle
+        if (keyval(key:Left) == 3), then, begin
+            steps left :=  handle direction (left, original die roll, steps left)
+        end
+
+        # run "right" cycle
+        if (keyval(key:Right) == 3), then, begin
+            steps left :=  handle direction (right, original die roll, steps left)
+        end
+
+        # run "confirm" cycle
+        if (keyval(key:Space) == 3), then, begin
+            move confirmed := 1
+        end
+
+        update die npc (die npc, steps left)
+        wait (1)
+
+    end
+
+    destroy NPC (die npc)
+    reset step history ()
+
+end

@@ -1,0 +1,25 @@
+# Uses global variable 50 to store steps.
+
+# you have to take your pills every step on map
+global variable (50, steps without hrt)
+
+
+plotscript, hrt step, begin
+    variable (take hrt every x steps)
+    take hrt every x steps := 300
+
+    if (steps without hrt == take hrt every x steps), then, begin
+        variable (one less hitpoint)
+        one less hitpoint := get hero stat(0, stat:HP, current stat) -- 1
+        set hero stat (0, stat:HP, one less hitpoint, current stat)
+    end, else, begin
+        steps without hrt += 1
+    end
+
+    show value(take hrt every x steps -- steps without hrt)
+
+end
+
+plotscript, take hrt, begin
+    steps without hrt := 0
+end

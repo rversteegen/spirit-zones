@@ -1,0 +1,36 @@
+# DEMONBUSTER sin statue
+# useonce sin foreteller
+
+plotscript, tell sins, begin
+    # This is a bugfix: so you don't see between the text boxes.
+    show backdrop (11)
+
+    suspend map music
+    play song (3)  # scary bells
+
+    # Shall I tell you your demons? Y/N
+    show text box (67)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        # Let's select a random curse!
+        variable (random text box id)
+        random text box id := random (1, 7)
+        random text box id += 67
+        # Your curse is x
+        show text box (random text box id)
+        wait for text box
+        set tag (tag:toggle, false)
+
+        # Would you like me to break your curse?
+        show text box (75)
+        wait for text box
+        if ( check tag (tag:toggle) ), then, begin
+            show text box (76)
+            set tag (tag:toggle, false)
+        end
+    end
+    show backdrop (-1)
+    stop song
+    resume map music
+    play song (get ambient music)
+end

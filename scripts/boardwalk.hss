@@ -1,0 +1,57 @@
+# a simple fake paralax that makes the sun stay in a fixed
+# By SlimeMaid
+#
+# Thanks to Bob the Hamster for help!
+
+define constant(3, update positions timer)
+define constant(5, animations timer)
+global variable (500, sunset backdrop current)
+global variable (503, seagull walkabout)
+global variable (504, map background layer)
+
+
+plotscript, load start parallax, begin
+    sunset backdrop current := load backdrop sprite (29)
+
+    seagull walkabout := load walkabout sprite (115)
+    set parent(seagull walkabout, sunset backdrop current)
+
+    # so this all renders below all the other tiles
+    map background layer := lookup slice(sl:map layer 0)
+    move slice below(sunset backdrop current, lookup slice(sl:map root))
+    variable(background rectangle)
+    background rectangle :=  createrect(320, 200)
+    set rect border(background rectangle, border:none)
+    move slice below(background rectangle, sunset backdrop current)
+    set slice visible(lookup slice(sl:map layer 0), false)
+    #set parent(sunset backdrop current, map background layer)
+
+    #set parent(sunset backdrop current, get hero slice (0))
+
+    set timer(update positions timer, 0, 1, @update positions)
+    set timer(animations timer, 0, 10, @animations)
+end
+
+
+script, animations, begin
+    if (get sprite frame(seagull walkabout) == 1) then (
+        set sprite frame(seagull walkabout, 2)
+        replace backdrop sprite(sunset backdrop current, 29)
+    ) else (
+        set sprite frame(seagull walkabout, 1)
+        replace backdrop sprite(sunset backdrop current, 30)
+    )
+
+    set timer(animations timer, 0, 10, @animations)
+end
+
+
+script, update positions, begin
+    # both seagull and sunset must be set every tick
+    put slice screen (sunset backdrop current, 0, 0)
+    # do some math to set x position...
+    variable (seagull position x)
+    seagull position x := (camera pixel x / 20)
+    put slice screen (seagull walkabout, seagull position x, camera pixel y + 14)
+    set timer(update positions timer, 0, 1, @update positions)
+end

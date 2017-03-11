@@ -1,0 +1,120 @@
+# Sokoban
+#
+# SlimeMaid
+
+# This "fake array" (see: https://rpg.hamsterrepublic.com/ohrrpgce/Scripts:Fake_arrays)
+# keeps track of all the goal NPC ids, so that each iteration of the main loop we can
+# check each's X,Y tile position to see if there is an npc of BLOCK WALKABOUT ID there.
+define constant(2000, array:goal npc ids)
+# This is the cutoff of the array, how big it is; used to ddetermine the last element.
+# Don't for get array size - 1 to get element #
+global variable (1900, array size)
+
+# These two allow the user to set custom walkabout sprites for the block and goal.
+# These two must be defined first in a custom plotscript, where thereafter executes
+# the main sokoban puzzle script with its required argument.
+global variable (1901, block walkabout id)
+global variable (1902, goal walkabout id)
+
+
+# For timer/main loop
+global variable (2, sokoban timer)
+
+
+script, is block, some npc id, begin
+    if (read npc(some npc id, NPCstat:picture) == block walkabout id) then (
+        exit returning(true)
+    ) else (
+        exit returning(false)
+    )
+end
+
+
+script, is goal, some npc id, begin
+    if (read npc(some npc id, NPCstat:picture) == goal walkabout id) then (
+        exit returning(true)
+    ) else (
+        exit returning(false)
+    )
+end
+
+
+script, build goal npc ids, number of goals, begin
+    array size := 0  # reset
+    variable(i)
+    for (i, 0, 499) do (
+        if (is goal(i)), then, begin
+            set NPC obstructs (i, false)
+            write global(array: goal npc ids + array size, i)
+            array size += 1
+        end
+        if (array size == number of goals) then (
+            exit script()
+        )
+    )
+end
+
+# This determines if a specific goal block is
+# covered by a sokoban block. Returns true/false.
+script, is goal covered, goal npc id, begin
+    variable(x, y, npc at goal position)
+    x := npc x(goal npc id)
+    y := npc y(goal npc id)
+    # XXX: sometimes this must be npc at spot (x, y), other times
+    # it must be (x, y, 1). idk why... this is just for some rooms
+    # i've tried and not others... does order of npcs matter?
+    npc at goal position := npc at spot(x, y, 1)  # XXX: sometimes this must be 
+
+    if (is block(npc at goal position) == true) then (
+        exit returning(true)
+    ) else (
+        exit returning(false)
+    )
+end
+
+# returns true/false
+script, are all goals covered, begin
+    variable(i, goal npc id)
+    for (i, 0, array size -- 1) do (
+        goal npc id := read global(array: goal npc ids + i)
+        # if the goal is not covered return false
+        if (not(is goal covered(goal npc id))) then (
+            exit returning(false)
+        )
+    )
+    # all the goals are covered, return true!
+    exit returning(true)
+end
+
+
+script, sokoban timer function, begin
+    if (room which called script <> current map) then (
+        exit script
+    )
+
+    if (are all goals covered()) then (
+        # XXX: should make blocks immoble once solved
+        set tag(tag:sokobanGoal, true)
+        stop timer(sokoban timer)
+        exit script
+    ) else (
+        set tag(tag:sokobanGoal, false)
+        set timer(sokoban timer, 0, 1, @sokoban timer function)
+    )
+end
+
+# don't use this directly; call it last in a wrapper function
+script, sokoban setup, number of goals, begin
+    set tag (tag:sokobanGoal, false)
+    room which called script := current map
+    build goal npc ids(number of goals)
+    sokoban timer function()
+end
+
+# see sokoban setup
+plotscript, new dark hallway theme, number of goals, begin
+    block walkabout id := 78
+    goal walkabout id := 79
+    flashlight circle of light()
+    sokoban setup(number of goals)
+end

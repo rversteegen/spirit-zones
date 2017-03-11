@@ -1,0 +1,7 @@
+plotscript, onload, begin
+    show text box (3)
+    advance text box
+    variable (menu to close)
+    menu to close := top menu
+    close menu(menu to close)
+end

@@ -1,0 +1,196 @@
+# fade in is bad
+script, throw gear into slime, from npc, gear end x, gear end y, begin
+    variable(gear start x)
+    gear start x := npc x (from npc)
+    variable (gear start y)
+    gear start y := npc y (from npc)
+    wait (5)
+    variable (gear npc)
+    gear npc := create NPC(5, gear start x, gear start y)
+    set NPC obstructs (gear npc, false)
+    set NPC ignores walls (gear npc, true)
+    walk NPC to X (gear npc, gear end x)
+    walk NPC to Y (gear npc, gear end y)
+    wait for NPC(gear npc)
+    destroy npc (gear npc)
+end
+
+# throw gears into slime, npc 5
+script, run circles, stoplight, zoe, daisy, begin
+    # starting from 9x5, go to bottom right corner at 11x5
+    walk NPC to X (stoplight, 11)
+    walk NPC to Y (stoplight, 5)
+    wait for npc (stoplight)
+
+    set npc direction (2, right)
+    set npc direction (0, right)
+
+    throw gear into slime(stoplight, 12, 6)
+
+    # go to top right corner at 11x2
+    walk NPC to X (stoplight, 11)
+    walk NPC to Y (stoplight, 2)
+    wait for npc (stoplight)
+
+    set npc direction (2, up)
+    set npc direction (0, up)
+
+    throw gear into slime(stoplight, 12, 3)
+
+    # go to top left corner
+    walk NPC to X (stoplight, 4)
+    walk NPC to Y (stoplight, 2)
+    wait for npc (stoplight)
+
+    set npc direction (2, left)
+    set npc direction (0, left)
+
+    throw gear into slime(stoplight, 3, 3)
+
+    # go to bottom left corner at 4x5
+    walk NPC to X (stoplight, 4)
+    walk NPC to Y (stoplight, 5)
+    wait for npc (stoplight)
+
+    throw gear into slime(stoplight, 3, 6)
+
+    # return to original position 9x5
+    walk NPC to X (stoplight, 9)
+    walk NPC to Y (stoplight, 5)
+    wait for npc (stoplight)
+
+    set npc direction (2, down)
+    set npc direction (0, down)
+end
+
+
+plotscript, daisy intro, begin
+    suspend player
+
+    # make player invisible
+    set hero picture(0, 7, outside battle)
+
+    # zoe & daisy r talking, looking at each other
+    set npc direction (2, right)
+    set npc direction (0, left)
+    wait (40)
+
+    # stoplight appears in the room, at bottom
+    variable (stoplight)
+    stoplight := create NPC (3, 7, 9, left)
+    wait (20)
+
+    # stoplight rushes right in front of zoe
+    walk NPC to X (stoplight, 8)
+    walk NPC to Y (stoplight, 5)
+    wait for npc (stoplight)
+    walk NPC to X (stoplight, 9)
+    wait for npc (stoplight)
+    wait (10)
+    # ... zoe looks at
+    set npc direction (2, down)
+    wait (10)
+    # ... daisy looks at
+    set npc direction (0, down)
+    wait (10)
+
+    # stopliggt appears runs circles around and throw garbage into slime
+    run circles (stoplight, 2, 0)
+
+    # zoe bumps stoplight
+
+    # stoplight crystal prisons zoe, walkabout picture 71
+    wait (10)
+    change npc id (2, 4)
+    wait (15)
+    
+    # carrys her out throwing things
+    set NPC obstructs (stoplight, false)
+    set NPC ignores walls (stoplight, true)
+    walk NPC to X (stoplight, 7)
+    walk NPC to Y (stoplight, 9)
+    wait for npc (stoplight)
+
+    set NPC obstructs (4, false)
+    set NPC ignores walls (4, true)
+    walk NPC to X (4, 7)
+    walk NPC to Y (4, 9)
+    wait for npc (4)
+    wait (5)
+    destroy npc (stoplight)
+    destroy npc (4)
+
+    # daisy walks to 8, 7 looking down
+    walk NPC to X (0, 8)
+    walk NPC to Y (0, 7)
+    wait for npc (0)
+
+
+
+
+
+
+
+
+
+    # start off daisy looking away from player
+    wait (60)
+    set npc direction (0, down)
+    reset hero picture ()
+
+
+    # Make molly look all four directions, down last, so she looks
+    # like she's looking around
+    set hero direction (me, left)
+    wait (10)
+    set hero direction (me, right)
+    wait (10)
+    set hero direction (me, up)
+    wait (10)
+
+    # daisy and hero see each other same time
+    set npc direction (0, up)
+    set hero direction (me, down)
+
+    # walk daisy to be to the right of player
+    
+    walk NPC to X (0, 8)
+    walk NPC to Y (0, 4)
+    wait for npc (0)
+
+    set hero direction (me, right)
+    set NPC direction (0, west)
+
+    # Series of explaining text boxes
+    show text box (82)
+    wait for text box
+
+    # Oh I almost forgott...
+    walk NPC to Y (0, 5)
+    wait for npc (0)
+    wait (5)
+    walk NPC to Y (0, 4)
+    wait for npc (0)
+    set NPC direction (0, west)
+
+    variable (cursor)
+    cursor := create NPC (1, 8, 4, left)
+    walk NPC to X (cursor, 0)
+    walk NPC to Y (cursor, 9)
+
+    set NPC obstructs (cursor, false)
+    set NPC ignores walls (cursor, true)
+    show text box (120)  # hrt
+    wait for text box
+    destroy npc(cursor)
+
+    # look at statue then talk "this girl"
+
+    # walk out by going right one and down four times, then deleting npc
+    # after a wait
+    walk NPC to X (0, 8)
+    walk NPC to Y (0, 9)
+    wait for npc (0)
+    destroy NPC (0)
+    resume player
+end

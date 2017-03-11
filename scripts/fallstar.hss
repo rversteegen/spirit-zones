@@ -1,0 +1,30 @@
+
+plotscript, falling star, begin
+    suspend map music
+    set hero picture(0, 7, outside battle)
+    suspend player
+    set NPC obstructs (7, false)
+    set NPC ignores walls (7, true)
+    camera follows NPC (7)
+    play song (5)
+    #play sound (19, true)
+    walk NPC to X (7, 3)
+    walk NPC to Y (7, 48)
+    wait for NPC (7)
+    #stop sound (19)
+    # whiteout begins
+    fade screen out (63, 63, 63)
+    play sound (18)
+    stop song ()
+    destroy NPC (7)
+    reset hero picture ()
+    write map block (3, 48, 133, 1)
+    write map block (3, 49, 134, 1)
+    wait (20)
+    fade screen in
+    #whiteout ends
+    camera follows hero (0)
+    resume player
+    resume map music
+    play song (get ambient music)
+end

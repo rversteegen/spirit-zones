@@ -1,0 +1,22 @@
+include, spirit-zones.hsi
+include, pills.hss
+include, statcheck.hss
+include, trainy.hss
+include, god.hss
+include, sokoban.hss
+include, newsokoban.hss
+include, onload.hss
+include, sins.hss
+include, wristwatch.hss
+include, meetdaisy.hss
+include, fallstar.hss
+include, capsule.hss
+include, eggpet.hss
+include, flashlight.hss
+include, end.hss
+include, boardwalk.hss
+
+plotscript, sokoban and hrt step, begin
+    normal sokoban step()
+    hrt step()
+end

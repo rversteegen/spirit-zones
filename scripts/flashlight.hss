@@ -1,0 +1,82 @@
+# source: https://rpg.hamsterrepublic.com/ohrrpgce/How_can_I_draw_a_circle_of_light_around_the_hero%3F
+global variable (33, flashlight circle)
+global variable (34, room which called script)
+define constant(1, flashlight timer)
+
+
+plotscript, cancel flashlight, begin
+  stop timer(flashlight timer)
+  if (slice is valid (flashlight circle)) then (
+    free slice (flashlight circle)
+  )
+  flashlight circle := 0
+  #flashlight circle of light()
+end
+
+
+plotscript, setup flashlight, begin
+  if (slice is valid (flashlight circle)) then (exit script)
+
+  flashlight circle := create container
+  # Move this container above all map layers, but below anything else
+  move slice above (flashlight circle, last child (lookup slice (sl:map root)))
+
+  variable (sl)
+  ### change '3' to the backdrop ID
+  sl := load backdrop sprite (26)
+  set parent (sl, flashlight circle)
+  put slice (sl, -160, -100)
+
+  # Create a 3x3 grid of black backdrops
+  variable (x, y)
+  for (x, -1, 1) do (
+    for (y, -1, 1) do (
+      # Don't place the centre piece
+      if (x == 0 && y == 0) then (continue)
+
+      ### change '4' to the ID of the blank backdrop
+      sl := load backdrop sprite (27)  # changing this == fun
+      set parent (sl, flashlight circle)
+      put slice (sl, -160 + 320 * x, -100 + 200 * y)
+    )
+  )
+end
+
+script, flashlight iteration, begin
+    if (current map <> room which called script) then (
+        cancel flashlight
+        exit script
+    )
+ 
+    # Keep moving above all other map slices, because the order could change when
+    # the map changes
+    if (flashlight circle <> last child (parent slice (flashlight circle))) then (
+      move slice above (flashlight circle, last child (lookup slice (sl:map root)))
+    )
+ 
+    # Because the slice is parented to the maproot its
+    # position is in map coordinates
+    put slice (flashlight circle, hero pixel x, hero pixel y)
+   
+    # call this script again on the next tick
+    set timer(flashlight timer, 0, 1, @flashlight iteration)
+end
+
+# main
+plotscript, flashlight circle of light, begin
+  lights are off()
+  setup flashlight
+ 
+  room which called script := current map
+ 
+  flashlight iteration()
+end
+
+
+plotscript, lights are on, begin
+    set tag(tag:inDarkness, false)
+end
+
+plotscript, lights are off, begin
+    set tag(tag:inDarkness, true)
+end

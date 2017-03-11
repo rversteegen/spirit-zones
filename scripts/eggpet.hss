@@ -1,0 +1,123 @@
+# tamagotchi clone
+# calculated by playtime, and calculating the last stored position
+# from current as means of penalty or gains for checking in
+# there are a few different states of the tama, the statuses, love score
+#
+# store time in minutes and ignore seconds?
+#
+# great - 20
+# good - 15
+# ok - 10
+# bad - 5
+# dead - 0
+#
+# -1 love score for every 10 minutes without feeding tama
+# +1 love score if feeding and last feed was less than 10 mins ago
+
+# globals:
+# 699 - love points 0-20...
+global variable (699, love points)
+# 700 - last checkin playtime in minutes total elapsed
+global variable (700, last checkin total minutes of play)
+
+
+script, convert to minutes, days, hours, minutes, begin
+    variable (days in minutes)
+    days in minutes := days * 24 * 60
+    variable (hours in minutes)
+    hours in minutes := hours * 60
+    exit returning (days in minutes + hours in minutes + minutes)
+end
+
+
+script, show pet face, big enemy sprite id, begin
+    #put sprite (big enemy sprite id, 100, 100)
+    center slice (big enemy sprite id)
+    suspend player
+    wait (30)
+    resume player
+    free sprite (big enemy sprite id)
+end
+
+
+script, number debugger, value, display position, prefix, begin
+  variable(i, str)
+  str := 10 + display position
+  $str=""
+  concatenate strings (prefix, str)
+  append number(str, value)
+  string color(str, random(1, 15)) # make the string flash colorfully
+  show string at(str, 0, display position * 10)
+
+  # set a timer to run this script again on the next tick
+  # without interrupting any other scripts
+  #set timer(0, 0, 1, @array debugger)
+end
+
+
+# what if dead?
+plotscript, feed pet, begin
+    # 
+    variable (total minutes of play)
+    total minutes of play := convert to minutes (days of play, hours of play, minutes of play)
+
+    # if love or time global is none...
+    if (love points == none), then, begin
+        love points := 8
+        last checkin total minutes of play := total minutes of play
+    end
+
+    # otherwise...
+    if (total minutes of play -- last checkin total minutes of play >> 9), then, begin
+        if (love points >> 0), then, begin
+            love points -= 5
+        end
+    end, else, begin,
+        if (love points << 20), then, begin
+            love points += 2
+        end
+    end
+    
+    variable (egg face)
+
+    # perfect/great (20)
+    if (love points == 20), then, begin
+        egg face := load large enemy sprite (5)
+        show pet face (egg face)
+    end
+
+    # good (19-15)
+    if (20 >> love points && love points >> 14), then, begin
+        egg face := load large enemy sprite (1)
+        show pet face (egg face)
+    end
+
+    # ok (14-10)
+    #if (15 >> love points >> 9), then, begin
+    if (15 >> love points && love points >> 9), then, begin
+        egg face := load large enemy sprite (4)
+        show pet face (egg face)
+    end
+
+    # bad (9-1)
+    if (10 >> love points && love points >> 0), then, begin
+        egg face := load large enemy sprite (2)
+        show pet face (egg face)
+    end
+
+    # dead (0)
+    if (love points == 0), then, begin
+        egg face := load large enemy sprite (3)
+        show pet face (egg face)
+    end
+
+    #$1="lp"
+    #number debugger(love points, 0, 1)
+    #$2="tmp"
+    #number debugger(total minutes of play, 1, 2)
+    #$3="ltmp"
+    #number debugger(last checkin total minutes of play, 2, 3)
+
+    # all done with this!
+    last checkin total minutes of play := total minutes of play
+end

@@ -1,0 +1,42 @@
+# Maybe just stats module...
+# This script is dedicated to various kinds of stat checks and rewards
+
+
+# D&D-style stat checks, saving throws, other similar mechanics.
+# This also includes basic operations to do with stats, e.g., replenishing
+# health or magic.
+
+
+#broken
+plotscript, recover all, begin
+  # Recover all HP and MP for everyone in party!
+
+  # HP
+  set hero stat (0, stat:HP, get hero stat (0, stat:HP, maximum stat), current stat )
+  set hero stat (1, stat:HP, get hero stat (1, stat:HP, maximum stat), current stat )
+  set hero stat (2, stat:HP, get hero stat (2, stat:HP, maximum stat), current stat )
+  set hero stat (3, stat:HP, get hero stat (3, stat:HP, maximum stat), current stat )
+end
+
+
+plotscript, stat check, stat to check, minimum value, reward money, begin
+  # Check a stat, if meets minimum value, give a gold reward.
+  #
+  # Arguments:
+  #   stat to check:
+  #   minimum value:
+  #   reward money
+
+  if (get hero stat (0, stat to check, base stat) >= minimum value) then (
+    get money (reward money)
+  ) else (
+    lose money (1)
+  )
+end
+
+
+plotscript, rusted chest, reward money, begin
+  # Some container that has been rusted shut and requires at least
+  # x attack to open and get a random money reward
+  stat check(stat:Atk, 2, reward money)
+end
