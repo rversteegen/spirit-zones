@@ -1,0 +1,12 @@
+# Personal Digital Assistant
+# By SlimeMaid
+#
+# Save anywhere!
+
+
+plotscript, use pda, begin
+    if ( check tag (tag:toggle) ), then, begin
+        set tag (tag:toggle, false)
+        save menu()
+    end
+end

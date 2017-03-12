@@ -16,6 +16,7 @@ include, flashlight.hss
 include, end.hss
 include, boardwalk.hss
 include, playsound.hss
+include, pda.hss
 
 plotscript, sokoban and hrt step, begin
     normal sokoban step()
