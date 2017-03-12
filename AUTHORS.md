@@ -71,6 +71,14 @@ Gloumouth1
 https://en.wikipedia.org/wiki/File:DescenteInfinie.ogg
 Used as star falling noise.
 
-All of the menu sounds:
-http://www.noiseforfun.com/
-I think the gotitem sound is also from here too.
+http://www.noiseforfun.com/ provided these sounds:
+
+  * All menu sounds
+  * gotitem sound
+  * Voltage Hum (for vending machine)
+  * Oh no, it's (teleport sound)
+  * Soap (stoplight throws gear into slime)
+  * Robo Elastic (bouncy slime spirit in intro)
+  * Lever (gashapon machine twist)
+  * Materialize (crystal prison noise)
+  * Ghosty (crayon ghost)

@@ -15,6 +15,7 @@ include, eggpet.hss
 include, flashlight.hss
 include, end.hss
 include, boardwalk.hss
+include, playsound.hss
 
 plotscript, sokoban and hrt step, begin
     normal sokoban step()

@@ -1,7 +1,9 @@
-# a simple fake paralax that makes the sun stay in a fixed
+# Sunset Fake Parallax
 # By SlimeMaid
-#
 # Thanks to Bob the Hamster for help!
+#
+# Simple effect where a sunset stays in a fixed position, and a seagull moves
+# at a slow rate across the screen as you go left/right (parallax).
 
 define constant(3, update positions timer)
 define constant(5, animations timer)

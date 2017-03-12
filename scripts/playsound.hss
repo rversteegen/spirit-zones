@@ -1,0 +1,3 @@
+plotscript, make sound, sound number, begin
+    play sound (sound number)
+end

@@ -12,6 +12,7 @@ script, throw gear into slime, from npc, gear end x, gear end y, begin
     walk NPC to X (gear npc, gear end x)
     walk NPC to Y (gear npc, gear end y)
     wait for NPC(gear npc)
+    play sound (21)
     destroy npc (gear npc)
 end
 
@@ -64,6 +65,39 @@ script, run circles, stoplight, zoe, daisy, begin
 end
 
 
+script, teleport animation, begin
+
+    play sound (24)  # teleport noise
+
+    set hero picture(0, 116, outside battle)
+    set hero direction(me, up)
+    set hero frame (me, 0)
+    wait (10)
+    set hero frame (me, 1)
+    wait (10)
+
+    set hero direction(me, right)
+    set hero frame (me, 0)
+    wait (10)
+    set hero frame (me, 1)
+    wait (10)
+
+    set hero direction(me, down)
+    set hero frame (me, 0)
+    wait (10)
+    set hero frame (me, 1)
+    wait (10)
+
+    set hero direction(me, left)
+    set hero frame (me, 0)
+    wait (10)
+    set hero frame (me, 1)
+    wait (10)
+
+    reset hero picture ()
+end
+
+
 plotscript, daisy intro, begin
     suspend player
 
@@ -100,6 +134,7 @@ plotscript, daisy intro, begin
     # zoe bumps stoplight
 
     # stoplight crystal prisons zoe, walkabout picture 71
+    play sound (23)
     wait (10)
     change npc id (2, 4)
     wait (15)
@@ -124,20 +159,13 @@ plotscript, daisy intro, begin
     walk NPC to X (0, 8)
     walk NPC to Y (0, 7)
     wait for npc (0)
+    wait (60)
 
-
-
-
-
-
-
-
+    # teleport stuff
+    teleport animation()
 
     # start off daisy looking away from player
-    wait (60)
     set npc direction (0, down)
-    reset hero picture ()
-
 
     # Make molly look all four directions, down last, so she looks
     # like she's looking around

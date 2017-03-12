@@ -5,6 +5,8 @@
 
 plotscript, gashapon, begin
     # twist thing 122 at layer 4, x21, y 49
+    suspend player
+    play sound (22)
     write map block (21, 49, 122, 4)
     wait (20)
     write map block (21, 49, 121, 4)
@@ -42,6 +44,7 @@ plotscript, gashapon, begin
         item id number := 16
     end
 
+    resume player
     get item (item id number)
     get item name (1, item id number)
     show textbox (122)
