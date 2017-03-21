@@ -1,0 +1,122 @@
+# Ice Cream Stax
+# By SlimeMaid
+#
+# SUMMARY
+# -------
+#
+# You are an ice cream monster at an ice cream factory which makes two flavors
+# of ice cream: confetti cake and banana. You can eat ice cream scoops which
+# fall from above by stacking up to three scoops at a time onto your waffle
+# cone. You can eat the scoops from the top down individually, or, if you stack
+# three of the same flavor, you can eat all three at once for a bonus! Don't drop
+# any ice cream or you'll make the ice cream monster cry and it will be GAME
+# OVER!
+#
+# Eat top scoopn on your waffle cone: 1 point
+# Eat three scoops of the same flavor on your waffle cone: 6 points
+#
+# Ice scream scoops are 20x20 walkabout sprites. The waffle cone sprite
+# is 20x20 walkabout which sits outside the game board (thus extending
+# game screen 20px vertically). The waffle cone simply represents the
+# column which scoops are set to be "caught" once reach 7, and not cause
+# game over.
+#
+# THE GAME BOARD
+# --------------
+#
+# 120px200px total, divided into 20x20 cells called
+# "slots," there are 60 total slots, numbered 0 to 59
+# which are kept in a fake array. Note that 2,2 on the
+# grid below would be slot number 8.
+#
+#   0 1 2 3 4 5
+# 0 . . . . . .
+# 1 . . . . . .
+# 2 . . . . . .
+# 3 . . . . . .   <-- Moving ice cream scoops here
+# 4 . . . . . .       Size: 120x140
+# 5 . . . . . .       Slots: 42 (0-41)
+# 6 . . . . . .         
+# ------------- Imaginary divider
+# 7
+# 8            <-- Your three stack slots/ice cream scoops & waffle cone
+# 9                Size: 120x30; Slots: 18 (42-59)
+# <waffle cone sprite down here as an indicator, exending the game screen by
+#  20px in height>
+
+# THE ICE CREAM CONE STACK
+global variable (6200, waffle cone top)
+global variable (6200, waffle cone middle)
+global variable (6200, waffle cone bottom)
+
+# FAKE ARRAY
+# keep 1d array to represent 2d board, will use equation
+# to translate. there are 60 slots in the 10x6 board.
+define constant(3000, array:game board slots)
+global variable (2999, array size)
+
+
+script, coordinate to slot index, begin
+    exit returning(y * 6 + x)
+end
+
+
+plotscript, bucket, begin
+    # prepare the bucket sprite
+    variable(bucket walkabout)
+    bucket walkabout := load walkabout sprite (122)
+
+    # draw game background
+    variable(background rectangle)
+    background rectangle :=  createrect(120, 200)
+    set rect border(background rectangle, border:none)
+
+    # npcs move 20px per x ticks down, npcs spawn at top
+    # in random column at random amount of ticks in
+    # everything must move every x ticks, and move starting
+    # at bottom...
+    while(true), do, begin
+        # BUCKET PROCESS
+        # clear bucket if needbe, if all thre same type get bonus +5,
+        # ... else +1
+        # move bucket left/right
+        # ejecting block (ice cream) from bucket (ice cream cone) with
+        # button (eat block of ice cream)
+
+        # MOVE RECT PROCESS
+        # ...
+        # If move and there is no bucket beneath, lose life.
+        # cannot move into other...
+        #
+        # Iterate over the slots in the game board backwards,
+        # starting at slot 59 (the 60th slot).
+
+        # MOVE RECTANGLES
+        #
+        # Loop through all of the board positions backwards,
+        # starting at the last slot above the bucket line.
+        for (i, 41, 0, -1) do (
+            # is this position simply `none`? then skip this position!
+
+            # Going forward we know there's a block at this position,
+            # becuase this slot is not `none` (it is a walkabout of a
+            # block, instead).
+
+            # Move the block down one slot
+
+            # Is the block below the bucket line?
+            # ... is the block occupying same column as bucket and the bucket isn't full?
+            # ... ELSE: game over!
+
+            # There must be a block at this position. Move it down.
+            # Is there a block at this position, or is it just `none`?
+            # ... if there is indeed a block at this
+            # if this slot has a block npc`
+        )
+
+        # SPAWN PROCESS
+        # choose random rectangle either one or the other
+        # choose random column to spawn at
+        # cannot spawn if space is already occupied
+    end 
+end

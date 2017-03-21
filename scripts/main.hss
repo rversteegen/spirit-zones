@@ -17,6 +17,7 @@ include, end.hss
 include, boardwalk.hss
 include, playsound.hss
 include, pda.hss
+include, spookysea.hss
 
 plotscript, sokoban and hrt step, begin
     normal sokoban step()

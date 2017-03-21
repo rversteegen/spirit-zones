@@ -1,0 +1,116 @@
+plotscript, sea scripts, begin
+    set ghost walkabout(1)
+    load start parallax()
+end
+
+
+# can be used to setup room too
+# room is #1 is mary
+script, set ghost walkabout, npc id, begin
+    # Random chance to set the spooky bench ghost walkabout
+    # to one of three walkabouts for this purpose.
+    
+    # FIXME: just using static walkabout for now...
+    
+
+    # make sure npc looking up, out toward the ocean
+    # you never see their face!!
+    set NPC direction(npc id, north)
+end
+
+
+# if move onto bench (to the left or right of npc in question,
+# then activate this script?) can just trigger though with invisible
+# npcs... that'd be better...
+plotscript, spooky sea stepon npc, begin
+    # This script is called by stepping onto an invisible npc on a bench, either
+    # to the left or right of the visible NPC you cannot interact with. We'll
+    # call them "Mary."
+
+    suspend player  # this is a cutscene
+
+    # First thing that happens when you sit next to Mary is you look forward.
+    set hero direction(me, north)
+
+    # Zoe exits caterpiller mode to sit on the opposite side of the bench, with
+    # Mary in the middle.
+    suspend catapillar
+
+    # if NPC is to the right of player, zoe needs to sit on far
+    # right of bench, otherwise vice-versa.
+    variable(npc was right of player)
+    if (NPC X (1) > hero x(me)), then, begin
+        walk hero to y (hero:zoe, hero y(me) -- 1)
+        walk hero to x(hero:zoe, hero x(me) + 2)
+        wait for hero(hero:zoe)
+        walk hero to y(hero:zoe, hero y(me))
+        npc was right of player := true
+    end, else, begin
+        walk hero to y (hero:zoe, hero y(me) -- 1)
+        walk hero to x (hero:zoe, hero x(me) -- 2)
+        wait for hero(hero:zoe)
+        walk hero to y(hero:zoe, hero y(me))
+        npc was right of player := false
+    end
+
+    wait for hero(hero:zoe)
+
+    # You're all looking out to see... (make zoe look at sea)
+    set hero direction(hero:zoe, north)
+
+    wait (60)
+    # then it rains or something entertaining happens
+    wait (60)
+
+    # Ghost says "I'm sorry"
+    show text box (128)
+
+    # Ghost turns off collide with walls and walks out to the ocean,
+    # being deleted a step or two into the ocean.
+    suspend NPC walls
+    set NPC obstructs(1, false)
+    walk NPC (1, north, 4)  # 1 is mary
+    wait for NPC(1)
+    wait (3)
+    destroy NPC(1)
+    resume NPC walls
+
+    # maybe cycle which npc
+    wait (60)
+    if (npc was right of player), then, begin
+        create NPC (1, hero x(me) + 1, hero y(me))
+    end, else, begin
+        create NPC (1, hero x(me) -- 1, hero y(me))
+    end
+
+    # The spot on the bench where the ghost was (mary) now has an item.
+    # You can pick it up and use the present but it has a random chance
+    # to either hurt or harm you.
+
+    # once grabbed reset the whole process...
+
+    # ...
+    resume catapillar
+    resume player
+
+
+
+
+
+
+    # OLD BELOW
+
+    # This script is triggered from a textbox 128
+    # "I'm sorry." Then the ghost walks off into the sea and
+    # vanishes. They leave behind either a gift or a trap that
+    # does damage. A random NPC walkabout is there each time.
+
+    # make hero face up,
+    # make zoe walk over to "other side" of bench to sit.
+
+    # random chance to set npc walkabout to a, b, or c...
+
+    # walk into the ocean
+    
+    # leave behind something.
+end
