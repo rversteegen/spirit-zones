@@ -28,6 +28,7 @@ plotscript, spooky sea stepon npc, begin
     # call them "Mary."
 
     suspend player  # this is a cutscene
+    play song(6)
 
     # First thing that happens when you sit next to Mary is you look forward.
     set hero direction(me, north)
@@ -90,6 +91,7 @@ plotscript, spooky sea stepon npc, begin
     # once grabbed reset the whole process...
 
     # ...
+    stop song
     resume catapillar
     resume player
 
