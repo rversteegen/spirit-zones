@@ -19,16 +19,15 @@ script, set ghost walkabout, npc id, begin
 end
 
 
-# if move onto bench (to the left or right of npc in question,
-# then activate this script?) can just trigger though with invisible
-# npcs... that'd be better...
 plotscript, spooky sea stepon npc, begin
     # This script is called by stepping onto an invisible npc on a bench, either
     # to the left or right of the visible NPC you cannot interact with. We'll
     # call them "Mary."
+    #
+    # I'm really inspired by the castlevania SotN confession room minigame.
 
     suspend player  # this is a cutscene
-    play song(6)
+    play song(6)  # weird spooky music
 
     # First thing that happens when you sit next to Mary is you look forward.
     set hero direction(me, north)
@@ -41,12 +40,14 @@ plotscript, spooky sea stepon npc, begin
     # right of bench, otherwise vice-versa.
     variable(npc was right of player)
     if (NPC X (1) > hero x(me)), then, begin
+        # sort of contrived, but this just looks/works nicest.
         walk hero to y (hero:zoe, hero y(me) -- 1)
         walk hero to x(hero:zoe, hero x(me) + 2)
         wait for hero(hero:zoe)
         walk hero to y(hero:zoe, hero y(me))
         npc was right of player := true
     end, else, begin
+        # sort of contrived, but this just looks/works nicest.
         walk hero to y (hero:zoe, hero y(me) -- 1)
         walk hero to x (hero:zoe, hero x(me) -- 2)
         wait for hero(hero:zoe)
@@ -54,17 +55,16 @@ plotscript, spooky sea stepon npc, begin
         npc was right of player := false
     end
 
+    # You're all looking out to see... (make zoe look at sea once
+    # she's ready)...
     wait for hero(hero:zoe)
-
-    # You're all looking out to see... (make zoe look at sea)
     set hero direction(hero:zoe, north)
-
-    wait (60)
+    wait (60)  # wait for something to happen...
     # then it rains or something entertaining happens
-    wait (60)
+    wait (30)  # time after event happens
 
-    # Ghost says "I'm sorry"
-    show text box (128)
+    # Ghost says "I'm sorry" (maybe should say nothing...)
+    #show text box (128)
 
     # Ghost turns off collide with walls and walks out to the ocean,
     # being deleted a step or two into the ocean.
@@ -73,46 +73,86 @@ plotscript, spooky sea stepon npc, begin
     walk NPC (1, north, 4)  # 1 is mary
     wait for NPC(1)
     wait (3)
+    variable(old soul x)
+    variable(old soul y)
+    old soul x := npc x(1)
+    old soul y := npc y(1)
     destroy NPC(1)
     resume NPC walls
+    wait(30)
 
-    # maybe cycle which npc
-    wait (60)
-    if (npc was right of player), then, begin
-        create NPC (1, hero x(me) + 1, hero y(me))
-    end, else, begin
-        create NPC (1, hero x(me) -- 1, hero y(me))
-    end
+    # soul coral comes from the ocean and washes up at your feet
+    create NPC (7, old soul x, old soul y)
+    suspend NPC walls
+    walk NPC (7, south, 3)
+    resume NPC walls
+    wait for npc(7)
 
-    # The spot on the bench where the ghost was (mary) now has an item.
-    # You can pick it up and use the present but it has a random chance
-    # to either hurt or harm you.
-
-    # once grabbed reset the whole process...
-
-    # ...
+    # done!
     stop song
     resume catapillar
     resume player
+end
 
-
-
-
-
-
-    # OLD BELOW
-
-    # This script is triggered from a textbox 128
-    # "I'm sorry." Then the ghost walks off into the sea and
-    # vanishes. They leave behind either a gift or a trap that
-    # does damage. A random NPC walkabout is there each time.
-
-    # make hero face up,
-    # make zoe walk over to "other side" of bench to sit.
-
-    # random chance to set npc walkabout to a, b, or c...
-
-    # walk into the ocean
     
-    # leave behind something.
+plotscript, snorkel, begin
+    # this script is to be activated on-step of the edge of a dock. snorkel asks
+    # for soul coral. if you have it ou put coral down, snorkel takes it, snorkel
+    # gives u snorkel gear.
+
+    # First snorkel comes to swim to you, to see if you have coral...
+    suspend player
+    create NPC (5, hero x(me), hero y(me) -- 2)  # snorkel
+    wait (10)
+    walk NPC (5, south, 3)
+    wait for npc (5)
+    wait (10)
+
+    # If player has soul coral you put it on ground and snorkel takes it and puts
+    # a snorkel in its place...
+    # else nothing (just swim away)...
+    if (inventory(item:soulcorl) <> 0), then, begin
+        # snorkel swims to the left to make room for coral
+        walk npc (5, left, 1)
+        wait for npc(5)
+        wait(10)
+        set npc direction(5, right)
+        wait(20)
+
+        # place the coral down first...
+        create NPC (7, hero x(me), hero y(me) -- 1)  # snorkel
+        wait(25)
+
+        # snorkel takes it (then pause)
+        set npc direction(5, right)
+        wait (15)
+        destroy npc(7)
+        wait (20)
+
+        # back up!
+        walk hero(me, south, 2)
+        set hero direction(me, up)
+        wait for hero(me)
+
+        # snorkel places item (then pause)
+        walk npc (5, right, 1)
+        set npc direction(5, down)
+        wait for npc(5)
+        create NPC (4, hero x(me), hero y(me) -- 2)  # snorkel
+        wait (10)
+
+        # walk up and face dir for niceness
+        walk hero (me, north, 1)
+        wait for hero(hero:zoe)
+
+        # remove the actual coral item!!!!!
+        delete item(item:soulcorl)
+    end
+
+    # Finally, snorkel swims away.
+    wait (10)
+    walk NPC (5, north, 1)
+    wait for npc (5)
+    destroy npc(5)
+    resume player
 end
