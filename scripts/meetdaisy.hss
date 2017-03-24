@@ -69,7 +69,7 @@ script, teleport animation, begin
 
     play sound (24)  # teleport noise
 
-    set hero picture(0, 116, outside battle)
+    set hero picture(me, 116, outside battle)
     set hero direction(me, up)
     set hero frame (me, 0)
     wait (10)

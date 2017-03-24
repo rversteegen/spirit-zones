@@ -274,6 +274,7 @@ plotscript, god conclusion, begin
     end
 
     # ACT III: God's Conclusion ----------------------------------------
+    # Swap out with class hero. Add first, remove last.
 
     # Determine which class the player is based on the class scores, the score
     # which is highest is the player's class. If there's a tie it defaults to
@@ -284,19 +285,12 @@ plotscript, god conclusion, begin
         # The player is a boxer, because their boxer score is highest.
         $1 = "boxer"
 
-        # +6 aim
-        old stat := get hero stat (0, stat:Aim)
-        set hero stat (0, stat:Aim, old stat + 6)
-
-        # +4 atk
-        old stat := get hero stat (0, stat:Atk)
-        set hero stat (0, stat:Atk, old stat + 4)
-
-        # Learn TwinHits
-        teach spell (0, atk:TwinHits)
-
         # Set "boxing expert" to on
+        # this should be a hero in party tag TODO
         set tag (tag:boxingExpert, on)
+
+        # add to party
+        add hero(hero:boxer)
     end, else, begin
         # The player's boxer score wasn't higher than everything else...
 
@@ -304,47 +298,22 @@ plotscript, god conclusion, begin
             # ur a witch
             $1 = "witch"
 
-            # MP + 5
-            old stat := get hero stat (0, stat:MP, base stat)
-            set hero stat (0, stat:MP, old stat + 5, base stat)
 
-            # +4 mag
-            old stat := get hero stat (0, stat:Mag)
-            set hero stat (0, stat:Mag, old stat + 2)
-
-            # +1 MP~
-            old stat := get hero stat (0, stat:MP~)
-            set hero stat (0, stat:MP~, old stat + 1)
-
-            # Learn Steal
-            teach spell (0, atk:Steal)
-
-            # See secrets!
-            set tag (tag:seeSecrets, on)
+            # add to party
+            add hero(hero:witch)
         end, else, begin
             # default to thief
             $1 = "thief"
-
-            # HP + 10 
-            old stat := get hero stat (0, stat:HP, base stat)
-            set hero stat (0, stat:HP, old stat + 5, base stat)
-
-            # +4 mag
-            old stat := get hero stat (0, stat:Def)
-            set hero stat (0, stat:Def, old stat + 4)
-
-            # +4 wil
-            old stat := get hero stat (0, stat:Wil)
-            set hero stat (0, stat:Wil, old stat + 4)
-
-            # +4 dog
-            old stat := get hero stat (0, stat:Dog)
-            set hero stat (0, stat:Dog, old stat + 4)
-
-            # Learn Steal
-            teach spell (0, atk:Escape)
+            # See secrets!
+            # XXX should show/hide indicators in game
+            set tag (tag:seeSecrets, on)
+            # add to the party
+            add hero(hero:thief)
         end
     end
+
+    swap by position(0,1)
+    delete hero(hero:molly)
 
     ################# RANDOM CURSE...
 
