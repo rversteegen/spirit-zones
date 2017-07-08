@@ -1,0 +1,330 @@
+# should be violent, mystic, and observant?
+#
+# Everything about "Spirit Zones" Character Creation
+# SlimeMaid
+#
+# Classes: there are three RPG classes: thief, witch, and boxer:
+#   * Thief is fast, dodges well, finds secret passages, see special
+#     secrets, and can escape any battle with a smokescreen.
+#   * Witch is best at magic in general
+#   * Boxer has best physical stats, has good chance to hit again when
+#     attacking with fists.
+#
+# Each class gets their own magic spell list. Every class has a unique
+# options throughotu the story. Class bonus stat increases occur
+# every level up, with bonuses on every five.
+#
+# Birth/Life Curses: the player is given one random curse from the following, which
+# affects them throughout the game, and cannot be "cured:"
+#   * False luck, you keep seeing opportunities, but they never yield results
+#   * Bad luck, e.g., soda will get stuck in vending machine
+#   * Font switched to gibberish
+#   * agoraphobia: you can only take level * x steps outside a safe room before
+#     die
+
+# The reason the scores are kept in global is because the scores will affect
+# stuff differently throughout the game.
+
+global variable (20, thief score)
+global variable (21, witch score)
+global variable (22, boxer score)
+
+
+plotscript, level up class, begin
+    # a level up trigger script so classes can level up (in terms of stats and
+    # attacks) differently.
+end
+
+
+script, rotating colors, begin
+    show backdrop (17)
+    wait (5)
+    show backdrop (18)
+    wait (5)
+    show backdrop (19)
+    wait (5)
+    show backdrop (20)
+    wait (5)
+    show backdrop (21)
+    wait (5)
+    show backdrop (22)
+    wait (5)
+    show backdrop (23)
+    wait (5)
+    show backdrop (24)
+    wait (5)
+end
+
+
+script, flashy title, begin
+    suspend player
+    fade screen out
+    wait (10)
+    show backdrop (-1)
+    show backdrop (17)
+    wait (10)
+    fade screen in
+    play song(2)
+    rotating colors ()
+    rotating colors ()
+    rotating colors ()
+    rotating colors ()
+    rotating colors ()
+    rotating colors ()
+
+    fade screen out
+    show backdrop (-1)
+    wait (10)
+    fade screen in
+    resume player
+end
+
+plotscript, gods trial, begin
+    # Dragon Warrior III Inspired Trial Based Class Assignment
+    #
+    # God's judgement in three acts, god decides the player's class based on
+    # quesitons and a scenario, god also places one random curse on the player.
+    #
+    #   ACT I: God's Questions: God talks for a bit, then asks the player
+    #     a series of questions.
+    #   ACT II: God's Scenario: An interactive scenario with three possible
+    #     outcomes.
+    #   ACT III: God's Conclusion: A class is determined based on scores,
+    #     scores modified by answers and which outcome the player chose in
+    #     the scenario. Finally, God gives the player one random curse and
+    #     tells the player to wake up.
+
+    # Start the scores at zero, we'll increase these depending on the question
+    thief score := 0
+    witch score := 0
+    boxer score := 0
+
+    # ACT I: God's Questions -------------------------------------------
+
+
+    # God says "hello" then asks your name.
+    show text box (47)
+    wait for text box
+    rename hero (0)
+
+    # "in this year of xxxx..."
+    $1 = ""
+    variable(the current year)
+    the current year := system year ()
+    append number(1, the current year)
+    show text box (64)
+    wait for text box
+
+    # Don't worry! Afterworld is better.
+    show text box (65)
+    wait for text box
+
+    # Your wife arrived...
+    show text box (66)
+    wait for text box
+
+    # but bad news...
+    show text box (104)
+    wait for text box
+
+    # you see...
+    show text box (105)
+    wait for text box
+
+    # I can teleport you
+    show text box (106)
+    wait for text box
+
+    # while you're at it...
+    show text box (107)
+    wait for text box
+
+    # they're for the payphone...
+    show text box (108)
+    wait for text box
+
+    # Before i teleport u
+    show text box (109)
+    wait for text box
+
+    # It's time to figure out what kind of person you are...
+    # END OF GOD INTRO TALKING... BEGIN QUESTIONS
+
+    # Bugfix for ACT II: If we do not show the "god backdrop" the player
+    # will see the map for a split second whenever they advance the text
+    # box! We will have to show backdrop (-1) later to stop showing this
+    # backdrop.
+    show backdrop (10)
+
+    # Question, "Are you often mischievous?"
+    show text box (48)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        thief score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Have you ever built a shrine of any sort?"
+    show text box (49)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        witch score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Do you enjoy breaking things?"
+    show text box (50)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        boxer score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Do you own anything that you feel has magical properties?"
+    show text box (51)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        witch score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Have you ever gotten thrills from stealing?"
+    show text box (52)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        thief score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Do you like watching old kung fu movies?"
+    show text box (53)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        boxer score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Have you ever hit someone really hard?"
+    show text box (94)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        boxer score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Do you like traps?"
+    show text box (95)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        thief score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Is Halloween your favorite holiday?"
+    show text box (96)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        witch score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Is it satisfying to see bad guys punched in the face?"
+    show text box (97)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        boxer score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Do you like to explore thoroughly in video games?"
+    show text box (98)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        thief score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # Question, "Does the supernatural, or paranormal interest you?"
+    show text box (99)
+    wait for text box
+    if ( check tag (tag:toggle) ), then, begin
+        witch score += 1
+        set tag (tag:toggle, false)
+    end
+
+    # "Thank you for answering honestly. I have one final test."
+    show text box (88)
+    wait for text box
+
+    show backdrop (-1)  # earlier we drew the "god" backdrop, undraw it
+    use door (0)  # go to act II, dream scenario room
+end
+
+plotscript, god conclusion, begin
+    # add points based on the scenario puzzle (act ii)
+    if ( check tag (tag:godTrialThief) == True ), then, begin
+        thief score += 2
+    end
+    if ( check tag (tag:godTrialWitch) == True ), then, begin
+        witch score += 2
+    end
+    if ( check tag (tag:godTrialBoxer) == True ), then, begin
+        boxer score += 2
+    end
+
+    # ACT III: God's Conclusion ----------------------------------------
+    # Swap out with class hero. Add first, remove last.
+
+    # Determine which class the player is based on the class scores, the score
+    # which is highest is the player's class. If there's a tie it defaults to
+    # _______. A "class" is just a set of benefits.
+    variable (old stat)
+
+    if (boxer score >> witch score && boxer score >> thief score), then, begin
+        # The player is a boxer, because their boxer score is highest.
+        $1 = "boxer"
+
+        # Set "boxing expert" to on
+        # this should be a hero in party tag TODO
+        set tag (tag:boxingExpert, on)
+
+        # add to party
+        add hero(hero:boxer)
+    end, else, begin
+        # The player's boxer score wasn't higher than everything else...
+
+        if (witch score >> boxer score && witch score >> thief score), then, begin
+            # ur a witch
+            $1 = "witch"
+
+
+            # add to party
+            add hero(hero:witch)
+        end, else, begin
+            # default to thief
+            $1 = "thief"
+            # See secrets!
+            # XXX should show/hide indicators in game
+            set tag (tag:seeSecrets, on)
+            # add to the party
+            add hero(hero:thief)
+        end
+    end
+
+    swap by position(0,1)
+    #rename hero 0 to hero 1
+    get hero name (22, 1)
+    set hero name (22, 0) 
+    delete hero(hero:molly)
+
+    ################# RANDOM CURSE...
+
+    ### done!
+    show text box (54)  # Text Box 54: I think that accurately describes you.
+    wait for text box
+    # I am connected to all...
+    show text box (100)
+    wait for text box
+    flashy title()
+    use door (2)
+end

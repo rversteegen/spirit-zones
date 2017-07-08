@@ -1,0 +1,32 @@
+# Make Sproingy Doingy NPC toggle sproigy/doingy state.
+#
+# In God's Land there's an NPC you can talk to, when you do
+# they make a cute sproingy sound and jump up and down.
+#
+# Toggles between two states: sproingy and doingy. In sproingy
+# state, the NPC is excited and moves a lot and makes a most
+# excited sproingy noise. In doingy state, they are far less
+# excited and make a disappointed noise that you'd want them
+# to stop being sproingy.
+
+plotscript, sproingy doingy, begin
+    variable(npc id)
+    npc id := 8
+    suspend player
+
+    # If the player direction isn't left change to left,
+    # otherwise change to up. We just use a walkabout
+    # to represent both states sproingy and doingy.
+    if (NPC direction(npc id) <> left), then, begin
+        play sound (20)
+        set NPC direction(npc id, left)
+        wait (70)
+    end, else, begin
+        # FIXME: sad sound...
+        play sound (27)
+        set NPC direction(npc id, down)
+        wait (40)
+    end
+
+    resume player
+end

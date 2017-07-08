@@ -1,13 +1,17 @@
 include, spirit-zones.hsi
+
+# Godsland
+include, godsland/god.hss
+include, godsland/sproingy.hss
+
 include, pills.hss
 include, statcheck.hss
 include, trainy.hss
-include, god.hss
-include, sokoban.hss
+include, universal/sokoban.hss
 include, newsokoban.hss
 include, onload.hss
 include, sins.hss
-include, wristwatch.hss
+include, universal/wristwatch.hss
 include, meetdaisy.hss
 include, fallstar.hss
 include, capsule.hss

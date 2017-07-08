@@ -27,6 +27,7 @@ plotscript, spooky sea stepon npc, begin
     # I'm really inspired by the castlevania SotN confession room minigame.
 
     suspend player  # this is a cutscene
+    suspend map music
     play song(6)  # weird spooky music
 
     # First thing that happens when you sit next to Mary is you look forward.
@@ -36,29 +37,29 @@ plotscript, spooky sea stepon npc, begin
     # Mary in the middle.
     suspend catapillar
 
-    # if NPC is to the right of player, zoe needs to sit on far
+    # if NPC is to the right of player, Zoe needs to sit on far
     # right of bench, otherwise vice-versa.
     variable(npc was right of player)
     if (NPC X (1) > hero x(me)), then, begin
         # sort of contrived, but this just looks/works nicest.
-        walk hero to y (hero:zoe, hero y(me) -- 1)
-        walk hero to x(hero:zoe, hero x(me) + 2)
-        wait for hero(hero:zoe)
-        walk hero to y(hero:zoe, hero y(me))
+        walk hero to y (1, hero y(0) -- 1)
+        walk hero to x(1, hero x(0) + 2)
+        wait for hero(1)
+        walk hero to y(1, hero y(0))
         npc was right of player := true
     end, else, begin
         # sort of contrived, but this just looks/works nicest.
-        walk hero to y (hero:zoe, hero y(me) -- 1)
-        walk hero to x (hero:zoe, hero x(me) -- 2)
-        wait for hero(hero:zoe)
-        walk hero to y(hero:zoe, hero y(me))
+        walk hero to y (1, hero y(0) -- 1)
+        walk hero to x (1, hero x(0) -- 2)
+        wait for hero(1)
+        walk hero to y(1, hero y(0))
         npc was right of player := false
     end
 
-    # You're all looking out to see... (make zoe look at sea once
+    # You're all looking out to see... (make Zoe look at sea once
     # she's ready)...
-    wait for hero(hero:zoe)
-    set hero direction(hero:zoe, north)
+    wait for hero(1)
+    set hero direction(1, north)
     wait (60)  # wait for something to happen...
     # then it rains or something entertaining happens
     wait (30)  # time after event happens
@@ -92,6 +93,8 @@ plotscript, spooky sea stepon npc, begin
     stop song
     resume catapillar
     resume player
+    resume map music
+    play song (get ambient music)
 end
 
     
@@ -102,7 +105,7 @@ plotscript, snorkel, begin
 
     # First snorkel comes to swim to you, to see if you have coral...
     suspend player
-    create NPC (5, hero x(me), hero y(me) -- 2)  # snorkel
+    create NPC (5, hero x(0), hero y(0) -- 2)  # snorkel
     wait (10)
     walk NPC (5, south, 3)
     wait for npc (5)
@@ -120,7 +123,7 @@ plotscript, snorkel, begin
         wait(20)
 
         # place the coral down first...
-        create NPC (7, hero x(me), hero y(me) -- 1)  # snorkel
+        create NPC (7, hero x(0), hero y(0) -- 1)  # snorkel
         wait(25)
 
         # snorkel takes it (then pause)
@@ -130,20 +133,20 @@ plotscript, snorkel, begin
         wait (20)
 
         # back up!
-        walk hero(me, south, 2)
-        set hero direction(me, up)
-        wait for hero(me)
+        walk hero(0, south, 2)
+        set hero direction(0, up)
+        wait for hero(0)
 
         # snorkel places item (then pause)
         walk npc (5, right, 1)
         set npc direction(5, down)
         wait for npc(5)
-        create NPC (4, hero x(me), hero y(me) -- 2)  # snorkel
+        create NPC (4, hero x(0), hero y(0) -- 2)  # snorkel
         wait (10)
 
         # walk up and face dir for niceness
-        walk hero (me, north, 1)
-        wait for hero(hero:zoe)
+        walk hero (0, north, 1)
+        wait for hero(1)
 
         # remove the actual coral item!!!!!
         delete item(item:soulcorl)

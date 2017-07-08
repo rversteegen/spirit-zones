@@ -1,0 +1,8 @@
+# all the random creatures/npcs in the hallways
+
+plotscript, i like the darkness, begin
+    # a cute monster asks u if like the darkness
+    # in the first hallway room of the game
+    # text box 130 - 132, check tag toggle
+    # also sound for 131 (happy) and 132 (sad)
+end

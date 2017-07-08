@@ -1,0 +1,21 @@
+# Tell time (gameplay time)
+
+plotscript, tell gameplay time, begin
+    variable (days)
+    days := days of play ()
+    variable (hours)
+    hours := hours of play ()
+    variable (minutes)
+    minutes := minutes of play ()
+    # set the strings
+    $1 = ""
+    append number(1, days)
+    $2 = ""
+    append number(2, hours)
+    $3 = ""
+    append number(3, minutes)
+
+    # show textbox
+    show text box (89)
+    wait for text box
+end
