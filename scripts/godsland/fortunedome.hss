@@ -1,0 +1,96 @@
+# FORTUNE DOME
+# ============
+#
+# Remember the boardgame "Trouble?" With the pegs,
+# and in the center a dome with a die in it. Push
+# the dome and the die rolls with a popping noise.
+#
+# This is like that, except the die has a weird
+# symbol on each face. Each face determines a
+# character the player will eventually run into,
+# I call this the "special encounter."
+#
+# For more details see: push the dome.
+
+
+# NOTE: should i make you accidentally fall onto it?
+plotscript, push the dome, begin
+    # push the dome: Roll the die! Player can only
+    # roll once! If player never rolls, they will
+    # never have a "special encounter."
+    #
+    # Sets one of six "special encounter" tags:
+    #   Roll 1: ...
+    #   Roll 2: ...
+    #   Roll 3: ...
+    #   Roll 4: ...
+    #   Roll 5: ...
+    #   Roll 6: ...
+
+    # This is the ID for the NPC which represents the
+    # die.
+    variable (die npc id)
+    die npc id := 15
+
+    variable (die npc x)
+    die npc x := NPC X (die npc id)
+    variable (die npc y)
+    die npc y := NPC Y (die npc id)
+
+    # This is the layer the dome is on. We only need to know
+    # the layer # because we can extrapolate x,y from die NPC.
+    variable (dome layer number)
+    dome layer number := 2
+
+    # Has the player already rolled? If so display
+    # textbox "the dome won't budge" and exit.
+
+    # FIXME: actual rolling anim not done...
+    # Rolling animation: changes die NPC state (two frame animation),
+    # but also changes the tile above itself to the dome pressed down
+    # tile. Dome lifts up after role (later).
+    variable (dome pressed tile id)
+    dome pressed tile id := 149
+    write map block (
+        NPC X (die npc id),
+        NPC Y (die npc id),
+        dome pressed tile id,
+        dome layer number
+    )
+
+    # Make a random roll and then set the die sprite to
+    # the appropriate direction/frame, as well as setting
+    # the special encounter tag which corresponds to the roll.
+    variable (die roll)
+    die roll := random(1, 6)
+    if (die roll == 1), then, begin
+        set NPC direction (die npc id, up)
+        set npc frame (die npc id, 0)
+    end
+    if (die roll == 2), then, begin
+        set NPC direction (die npc id, up)
+        set npc frame (die npc id, 1)
+    end
+    if (die roll == 3), then, begin
+        set NPC direction (die npc id, right)
+        set npc frame (die npc id, 0)
+    end
+    if (die roll == 4), then, begin
+        set NPC direction (die npc id, right)
+        set npc frame (die npc id, 1)
+    end
+    if (die roll == 5), then, begin
+        set NPC direction (die npc id, down)
+        set npc frame (die npc id, 0)
+    end
+    if (die roll == 6), then, begin
+        set NPC direction (die npc id, down)
+        set npc frame (die npc id, 1)
+    end
+
+    # The dome was pressed in; now that the role is complete make
+    # the dome visually "unpressed..."
+    # BUT: you wanted it so it could only be pressed once, so
+    # maybe it should stay "stuck..."
+    #write map block (die npc x, die npc y, 249, dome layer number)
+end

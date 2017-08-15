@@ -3,25 +3,37 @@ include, spirit-zones.hsi
 # Godsland
 include, godsland/god.hss
 include, godsland/sproingy.hss
+include, godsland/sins.hss
+include, godsland/capsule.hss
+include, godsland/fallstar.hss
+include, godsland/fortunedome.hss
 
-include, pills.hss
-include, statcheck.hss
-include, trainy.hss
+# Items
+include, items/pills.hss
+include, items/wristwatch.hss
+include, items/pda.hss
+include, items/eggpet.hss
+
+# Universal
+include, universal/statcheck.hss
 include, universal/sokoban.hss
-include, newsokoban.hss
+include, universal/newsokoban.hss
+include, universal/playsound.hss
+
+# Minigames
+include, minigames/trainy.hss
+
+# Dark hallway
+include, darkhallway/meetdaisy.hss
+include, darkhallway/flashlight.hss
+
+# Spooky Sea
+include, spookysea/boardwalk.hss
+include, spookysea/spookysea.hss
+
+# Misc.
 include, onload.hss
-include, sins.hss
-include, universal/wristwatch.hss
-include, meetdaisy.hss
-include, fallstar.hss
-include, capsule.hss
-include, eggpet.hss
-include, flashlight.hss
-include, end.hss
-include, boardwalk.hss
-include, playsound.hss
-include, pda.hss
-include, spookysea.hss
+
 
 plotscript, sokoban and hrt step, begin
     normal sokoban step()

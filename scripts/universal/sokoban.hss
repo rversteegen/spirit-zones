@@ -74,6 +74,8 @@ plotscript, god train sokoban step, begin
     end
 end
 
+
+# NOTE: maybe move this to its map folder...
 # if you cross invisible track that's magic tag set
 # if you wrap around that's thief tag set
 # if you kill cow it's boxer

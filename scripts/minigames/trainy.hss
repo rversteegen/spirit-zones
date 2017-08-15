@@ -303,6 +303,7 @@ script, boardgame turn, begin
     variable (die npc)
     die npc := create NPC (1, 5, 5, left)
 
+    # I think this is the rolling animation?
     set npc frame (die npc, 0)
     wait (5)
     set npc frame (die npc, 1)

@@ -1,7 +1,8 @@
 # Personal Digital Assistant
 # By SlimeMaid
 #
-# Save anywhere!
+# Save anywhere! I wanna make this capable of saving,
+# loading, etc...
 
 
 plotscript, use pda, begin
