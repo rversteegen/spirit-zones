@@ -10,8 +10,8 @@ contributed to this project.
 
 Donate to [SlimeMaid's Patreon](https://www.patreon.com/SlimeMaid) to get access
 to the Windows, Mac, Linux installers/binaries *and* fund this project.
-Otherwise you can play/edit the game through
-[OHRRPGCE](http://rpg.hamsterrepublic.com/ohrrpgce/Main_Page).
+Otherwise you can play and edit the game (with ease!) using
+[the OHRRPGCE game engine](http://rpg.hamsterrepublic.com/ohrrpgce/Main_Page).
 
 ## Currently in alpha
 
