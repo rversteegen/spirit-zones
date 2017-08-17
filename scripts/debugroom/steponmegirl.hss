@@ -1,0 +1,28 @@
+# On step check if character in zone x. If character
+# is stepping in that zone (the neon dancer fishnet
+# girl), then play one of two random sounds, change
+# the dialog tile to one of many (step on me to oh yes
+# to unf), finally make the tile the player is stepping
+# on sparkle (if sparkle not already there).
+
+# Make face so she can ahogoa face and stuff? also
+# make face talking npc which teleports you places
+# and stuff?
+
+# The "step on me" tile is located at 12,1
+
+plotscript, please steppy, begin
+    if (read zone (1, HERO X, HERO Y)), then, begin
+        # Play random sound from selection...
+
+        # Change dialog randomly...
+        write map block (12, 1, random (5, 7), 4)
+
+        # Make that tile sparkle...
+
+        # Make ahogoa face
+        write map block (13, 2, 37, 4)
+        wait (20)
+        write map block (13, 2, 38, 4)
+    end
+end

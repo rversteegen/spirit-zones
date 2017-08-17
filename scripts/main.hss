@@ -31,6 +31,9 @@ include, darkhallway/flashlight.hss
 include, spookysea/boardwalk.hss
 include, spookysea/spookysea.hss
 
+# Sekret debug hax room
+include, debugroom/steponmegirl.hss
+
 # Misc.
 include, onload.hss
 
