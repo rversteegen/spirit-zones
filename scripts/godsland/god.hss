@@ -101,24 +101,6 @@ plotscript, gods trial, begin
 
     # ACT I: God's Questions -------------------------------------------
 
-
-    # God says "hello" then asks your name.
-    show text box (47)
-    wait for text box
-    rename hero (0)
-
-    # "in this year of xxxx..."
-    $1 = ""
-    variable(the current year)
-    the current year := system year ()
-    append number(1, the current year)
-    show text box (64)
-    wait for text box
-
-    # Don't worry! Afterworld is better.
-    show text box (65)
-    wait for text box
-
     # Your wife arrived...
     show text box (66)
     wait for text box
@@ -133,14 +115,6 @@ plotscript, gods trial, begin
 
     # I can teleport you
     show text box (106)
-    wait for text box
-
-    # while you're at it...
-    show text box (107)
-    wait for text box
-
-    # they're for the payphone...
-    show text box (108)
     wait for text box
 
     # Before i teleport u

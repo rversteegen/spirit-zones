@@ -58,6 +58,22 @@ plotscript, push the dome, begin
         dome layer number
     )
 
+    # rolling animation
+    set npc direction (die npc id, left)
+    set npc frame (die npc id, 0)
+    wait (5)
+    set npc frame (die npc id, 1)
+    wait (5)
+
+    variable (dome unpressed tile id)
+    dome unpressed tile id := 148
+    write map block (
+        NPC X (die npc id),
+        NPC Y (die npc id),
+        dome unpressed tile id,
+        dome layer number
+    )
+
     # Make a random roll and then set the die sprite to
     # the appropriate direction/frame, as well as setting
     # the special encounter tag which corresponds to the roll.

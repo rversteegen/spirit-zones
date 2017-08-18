@@ -26,4 +26,66 @@ plotscript, falling star, begin
     resume player
     resume map music
     play song (get ambient music)
+
+    # The rest of this is just for the spirit helper
+
+    # a symbol/exclaimation mark pops over the spirit helper's
+    # head
+    variable (notice mark sprite)
+    notice mark sprite := load walkabout sprite (159)
+    put slice (notice mark sprite, 100, 120)
+    wait (15)
+    # should probably play sound
+    free sprite (notice mark sprite)
+
+    # spirit jumps
+    set npc z (18, 2)
+    wait (1)
+    set npc z (18, 4)
+    wait (1)
+    set npc z (18, 8)
+    wait (2)
+    set npc z (18, 4)
+    wait (1)
+    set npc z (18, 0)
+    wait (1)
+
+    # the spirit helper walks over to player
+    walk NPC to X (18, 3)
+    wait for NPC (18)
+
+    # .. then they say hi and ask ur name
+    show text box (47)
+    wait for text box
+    rename hero (0)
+
+    # "in this year of xxxx..."
+    $1 = ""
+    variable(the current year)
+    the current year := system year ()
+    append number(1, the current year)
+    show text box (64)
+    wait for text box
+
+    # Don't worry! Afterworld is better.
+    show text box (65)
+    wait for text box
+
+    # Me? I'm here to...
+    show text box (136)
+    wait for text box
+
+    # Where's your wife? Warp God would know...
+    show text box (135)
+    wait for text box
+
+    # move them to be by the god
+    walk NPC to X (18, 13)
+    wait for NPC (18)
+    walk NPC to Y (18, 49)
+    wait for NPC (18)
+    walk NPC to X (18, 16)
+    wait for NPC (18)
+    set npc position (18, 31, 50)
+    wait for NPC (18)
 end

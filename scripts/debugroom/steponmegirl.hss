@@ -11,6 +11,43 @@
 
 # The "step on me" tile is located at 12,1
 
+# Text boxes 133, 134
+
+global variable (666, selected zorb)
+
+
+plotscript, warp zone autoload, begin
+    # This is to be used on load of map.
+
+    # Done so the player isn't obstructed by the warp number
+    # selector (an NPC), and so the indicator can move freely
+    set NPC obstructs (1, false)
+end
+
+
+plotscript, select zorb, door id, begin
+    selected zorb := door id
+    # move selector npc to hero current location
+    walk NPC to X (1, hero X)
+end
+
+
+plotscript, ask to teleport, begin
+    # ask first (make sure selected)
+    if (selected zorb >= 0), then, begin
+        show text box (134)
+        wait for text box
+        if (check tag (tag:toggle)), then, begin
+            set tag (tag:toggle, false)
+            # send them on their way
+            use door (selected zorb)
+        end
+    end, else, begin
+        show text box (133)
+    end
+end
+
+
 plotscript, please steppy, begin
     if (read zone (1, HERO X, HERO Y)), then, begin
         # Play random sound from selection...
