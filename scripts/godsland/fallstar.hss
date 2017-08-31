@@ -23,7 +23,6 @@ plotscript, falling star, begin
     fade screen in
     #whiteout ends
     camera follows hero (0)
-    resume player
     resume map music
     play song (get ambient music)
 
@@ -34,18 +33,14 @@ plotscript, falling star, begin
     variable (notice mark sprite)
     notice mark sprite := load walkabout sprite (159)
     put slice (notice mark sprite, 100, 120)
-    wait (15)
+    wait (10)
     # should probably play sound
     free sprite (notice mark sprite)
 
     # spirit jumps
-    set npc z (18, 2)
-    wait (1)
     set npc z (18, 4)
     wait (1)
     set npc z (18, 8)
-    wait (2)
-    set npc z (18, 4)
     wait (1)
     set npc z (18, 0)
     wait (1)
@@ -88,4 +83,21 @@ plotscript, falling star, begin
     wait for NPC (18)
     set npc position (18, 31, 50)
     wait for NPC (18)
+
+    # place uneasy anime lines over character, as well
+    # as a "..." balloon
+    variable (ellipsis sprite)
+    ellipsis sprite := load walkabout sprite (164)
+    put slice (ellipsis sprite, 60, 100)
+
+    variable (drama lines sprite)
+    drama lines sprite := load walkabout sprite (163)
+    put slice (drama lines sprite, 60, 120)
+
+    wait (40)
+    free sprite (ellipsis sprite)
+    free sprite (drama lines sprite)
+
+    # end
+    resume player
 end

@@ -21,7 +21,18 @@ Here's Emamouse's social links:
 The songs Emamouse created:
 
   * "Toxiccandies," [Soundcloud](https://soundcloud.com/emamouse2/zoe-molly-toxiccandies)
-  * "Rainbow Crayons," ...
+  * "Rainbow Crayons," used in the train intro god test thing and in the train
+    minigame
+  * "LunasidePark," used in the boardwalk zone (with snorkel)
+  * "Glistening Ribbons," used in the hallway zone
+
+Note from SlimeMaid:
+
+  "I love emamouse's music and graphic art. It's so far out, it's totally
+unlike anything I've ever seen or heard. I love you emamouse. You have changed
+me as an artist and introduced me to a new world. Having you do 4 songs for
+this game is the greatest gift anyone could have ever given me. You fill me
+with determination to get this game done."
 
 ## Über Anne
 
@@ -35,6 +46,11 @@ On the socials:
   * [@Uber_Anne on Twitter](https://twitter.com/Uber_Anne)
   * [Über Anne's Tumblr](theuberanne.tumblr.com/)
 
+Note from SlimeMaid:
+
+  "I saw her cute art on Twitter, and I thought, what this person does is a prime cut of
+trans culture, so I wanted to rope her into doing something for the project."
+
 ## CIRCÉ "MURDERCOCK" TORRES
 
 Graphic art, namely:
@@ -42,6 +58,62 @@ Graphic art, namely:
   * The coloring book in the coloring book screens
   * Blacklight carpet pattern, "burn it down," as used in the intro god scene
     background
+
+Note from SlimeMaid:
+
+  "I love this person... they helped me with
+[HoloJam](https://slimemaid.itch.io/holojam) before this. Not only can they
+make good art but they can do it so quickly... it's amazing. They have a really
+cool style, but is also very versatile.
+
+## applebeesong2
+
+What they did:
+
+  * Full-body illustration of SlimeMaid (the character that pops up when you talk
+to SlimeMaid; bunny maid big red bow). This is based on an actual picture of
+SlimeMaid.
+
+Social:
+
+  * [@applebeesong2 on Twitter](https://twitter.com/applebeesong2)
+
+Note from SlimeMaid:
+
+  "I really love their use of black canvases, edge detection, artifacts, neon
+colors. Their art is so stylish! I saw a lot of their stuff meshed with what I
+was doing so I had to reach out!" 
+
+## 清永
+
+Social:
+
+  * [@kyngayndz on Twitter](https://twitter.com/kyngayndz)
+  * [清永 on Pixiv](https://www.pixiv.net/member_illust.php?id=18765431)
+
+What they did:
+
+  * Made the school girl with a knife in her head full body, character design
+
+Note from SlimeMaid:
+
+  "I love this artist! Their use of color is soooogooood and I love how weird
+all their art is1!!!! I love their art so much! I'm so happy they joined this
+project and contributed art! Dream come true!
+
+## Postal
+
+Social links:
+
+ * [@postalbelieve on Twitter])https://twitter.com/postalbelieve
+
+  "I thought they did some really cool stuff on their twitter, it had some
+fresh looks, I'm so glad they made some monsters!"
+
+What they did:
+
+  * Some monsters for the dark hallway zone. WILL UPDATE LATER WITH MORE
+    DETAILS.
 
 ## Art SlimeMaid Collaged
 

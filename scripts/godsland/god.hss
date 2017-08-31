@@ -1,5 +1,3 @@
-# should be violent, mystic, and observant?
-#
 # Everything about "Spirit Zones" Character Creation
 # SlimeMaid
 #
@@ -14,14 +12,6 @@
 # options throughotu the story. Class bonus stat increases occur
 # every level up, with bonuses on every five.
 #
-# Birth/Life Curses: the player is given one random curse from the following, which
-# affects them throughout the game, and cannot be "cured:"
-#   * False luck, you keep seeing opportunities, but they never yield results
-#   * Bad luck, e.g., soda will get stuck in vending machine
-#   * Font switched to gibberish
-#   * agoraphobia: you can only take level * x steps outside a safe room before
-#     die
-
 # The reason the scores are kept in global is because the scores will affect
 # stuff differently throughout the game.
 
@@ -107,10 +97,6 @@ plotscript, gods trial, begin
 
     # but bad news...
     show text box (104)
-    wait for text box
-
-    # you see...
-    show text box (105)
     wait for text box
 
     # I can teleport you
