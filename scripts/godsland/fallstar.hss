@@ -30,6 +30,7 @@ plotscript, falling star, begin
 
     # a symbol/exclaimation mark pops over the spirit helper's
     # head
+    # TODO: maybe make blink or animate?
     variable (notice mark sprite)
     notice mark sprite := load walkabout sprite (159)
     put slice (notice mark sprite, 100, 120)
@@ -45,8 +46,10 @@ plotscript, falling star, begin
     set npc z (18, 0)
     wait (1)
 
-    # the spirit helper walks over to player
+    # the spirit helper walks over to player, looks
+    # at them
     walk NPC to X (18, 3)
+    set NPC direction(18, north)
     wait for NPC (18)
 
     # .. then they say hi and ask ur name
@@ -82,21 +85,28 @@ plotscript, falling star, begin
     walk NPC to X (18, 16)
     wait for NPC (18)
     set npc position (18, 31, 50)
+    set npc direction(18, south)
     wait for NPC (18)
 
     # place uneasy anime lines over character, as well
     # as a "..." balloon
-    variable (ellipsis sprite)
-    ellipsis sprite := load walkabout sprite (164)
-    put slice (ellipsis sprite, 60, 100)
+    variable (ellipsis)
+    ellipsis := load walkabout sprite (164)
+    put slice (ellipsis, 60, 100)
 
-    variable (drama lines sprite)
-    drama lines sprite := load walkabout sprite (163)
-    put slice (drama lines sprite, 60, 120)
+    variable (lines)
+    lines := load walkabout sprite (163)
+    put slice (lines, 60, 120)
 
-    wait (40)
-    free sprite (ellipsis sprite)
-    free sprite (drama lines sprite)
+    variable (counter)
+    for (counter, 1, 4, 1) do (
+        set sprite frame (ellipsis, counter)
+        set sprite frame (lines, counter)
+        wait (10)
+    )
+
+    free sprite (lines)
+    free sprite (ellipsis)
 
     # end
     resume player
