@@ -49,8 +49,8 @@ plotscript, falling star, begin
     # the spirit helper walks over to player, looks
     # at them
     walk NPC to X (18, 3)
-    set NPC direction(18, north)
     wait for NPC (18)
+    set NPC direction(18, north)
 
     # .. then they say hi and ask ur name
     show text box (47)
