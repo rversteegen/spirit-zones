@@ -26,6 +26,7 @@ include, minigames/trainy.hss
 # Dark hallway
 include, darkhallway/meetdaisy.hss
 include, darkhallway/flashlight.hss
+include, darkhallway/specialroom.hss
 
 # Spooky Sea
 include, spookysea/boardwalk.hss

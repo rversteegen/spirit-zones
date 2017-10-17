@@ -1,0 +1,38 @@
+plotscript, peer into window, begin
+
+
+    variable (closest pipes)
+    closest pipes := load backdrop sprite (34)
+    move slice below(closest pipes, lookup slice(sl:map root))
+
+    variable (middle pipe)
+    middle pipe := load backdrop sprite (35)
+    move slice below(middle pipe, closest pipes)
+    
+    variable (farthest wall)
+    farthest wall := load backdrop sprite (36)
+    move slice below(farthest wall, middle pipe)
+
+    variable(background rectangle)
+    # A background rectangle is created because otherwise we get an
+    # awesome nodraw effect...
+    background rectangle :=  createrect(320, 400)
+    set rect border(background rectangle, border:none)
+    move slice below(background rectangle, farthest wall)
+    set slice visible(lookup slice(sl:map layer 0), false)
+    
+    suspend player
+    move slice to (closest pipes, 0, 60, 150)
+    move slice to (middle pipe, 0, 30, 100)
+    move slice to (farthest wall, 0, 15, 100)
+    pan camera (north, 10, 1)
+    wait for camera
+    wait(60)
+    move slice to (closest pipes, 0, 0, 100)
+    move slice to (middle pipe, 0, 0, 100)
+    move slice to (farthest wall, 0, 0, 100)
+    pan camera (south, 10, 1)
+    wait for camera
+    camera follows hero
+    resume player
+end

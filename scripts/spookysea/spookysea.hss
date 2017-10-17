@@ -1,3 +1,4 @@
+# FIXME: comment!
 plotscript, sea scripts, begin
     set ghost walkabout(1)
     load start parallax()
