@@ -35,6 +35,9 @@ include, spookysea/spookysea.hss
 # Sekret debug hax room
 include, debugroom/steponmegirl.hss
 
+# Fingerland
+include, fingerland/staticbg.hss
+
 # Misc.
 include, onload.hss
 

@@ -1,0 +1,39 @@
+# City fake parralax
+# By SlimeMaid
+# Thanks to Bob the Hamster, tmc for help!
+# (See: espernet, #slimesalad)
+#
+# NOTE: you must use this as map
+# "autorun" and "after battle" scripts
+#
+# Simple effect where an image in the background of
+# map stays in fixed position...
+
+define constant(6, positions timer)
+define constant(8, anim timer)
+
+global variable (900, city bg)
+global variable (904, map bg layer)
+
+
+plotscript, onload start parallax, begin
+    city bg := load backdrop sprite (37)
+
+    # make sure bg renders below everything!
+    map bg layer := lookup slice(sl:map layer 0)
+    move slice below(city bg, lookup slice(sl:map root))
+    variable(background rectangle)
+    background rectangle :=  createrect(320, 200, 2)
+    set rect border(background rectangle, border:none)
+    move slice below(background rectangle, city bg)
+    set slice visible(lookup slice(sl:map layer 0), false)
+
+    # this makes sure it will keep updating!
+    set timer(positions timer, 0, 1, @new positions)
+end
+
+
+script, new positions, begin
+    put slice screen (city bg, 0, 0)
+    set timer(positions timer, 0, 1, @new positions)
+end
