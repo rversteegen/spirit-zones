@@ -17,6 +17,7 @@ global variable (888, current backdrop frame)
 # The current frame/screen # of the fixed sunset backdrop
 # (the reflection is animated).
 global variable (800, arcade backdrop current)
+global variable (801, arcade foredrop current)
 
 # FIXME: comment!
 global variable (566, map layer zero)
@@ -26,11 +27,13 @@ plotscript, load start arcade parallax, begin
     # FIXME: comment...
     # Load the sunset and seagull sprites and...
     arcade backdrop current := load backdrop sprite (38)
+    arcade foredrop current := load backdrop sprite (41)
 
     # Do a lot of magic so the sunset and seagul both render
     # below the tilemap itself.
     map layer zero := lookup slice(sl:map layer 0)
     move slice below(arcade backdrop current, lookup slice(sl:map root))
+    move slice above(arcade foredrop current, lookup slice(sl: map layer 3))
     variable(background rectangle)
     # A background rectangle is created because otherwise we get an
     # awesome nodraw effect...
@@ -77,6 +80,7 @@ end
 script, update arcade positions, begin
     # both seagull and sunset must be set every tick
     put slice screen (arcade backdrop current, 0, 0)
+    put slice screen (arcade foredrop current, 0, 0)
     # do some math to set x position...
     set timer(update arcade positions timer, 0, 1, @update arcade positions)
 end
