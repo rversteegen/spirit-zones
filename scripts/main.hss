@@ -38,6 +38,9 @@ include, debugroom/steponmegirl.hss
 # Fingerland
 include, fingerland/staticbg.hss
 
+# Arcade
+include, arcade/arcadebg.hss
+
 # Misc.
 include, onload.hss
 

@@ -1,0 +1,82 @@
+# Sunset Fake Parallax
+# By SlimeMaid
+# Thanks to Bob the Hamster for help!
+#
+# Simple effect where a sunset stays in a fixed position, and a seagull moves
+# at a slow rate across the screen as you go left/right (parallax).
+
+# Reserve two constants for two different timers, one for the timer
+# which updates the position of the sun backdrop screen and the seagull's
+# position, and another which simply alternates two frames of animation for
+# the sun backdrop and the seagull.
+define constant(8, update arcade positions timer)
+define constant(9, arcade animation timer)
+
+global variable (888, current backdrop frame)
+
+# The current frame/screen # of the fixed sunset backdrop
+# (the reflection is animated).
+global variable (800, arcade backdrop current)
+
+# FIXME: comment!
+global variable (566, map layer zero)
+
+# Prepares the sunset backdrop/seagull parallax and start the timers!
+plotscript, load start arcade parallax, begin
+    # FIXME: comment...
+    # Load the sunset and seagull sprites and...
+    arcade backdrop current := load backdrop sprite (38)
+
+    # Do a lot of magic so the sunset and seagul both render
+    # below the tilemap itself.
+    map layer zero := lookup slice(sl:map layer 0)
+    move slice below(arcade backdrop current, lookup slice(sl:map root))
+    variable(background rectangle)
+    # A background rectangle is created because otherwise we get an
+    # awesome nodraw effect...
+    background rectangle :=  createrect(320, 200)
+    set rect border(background rectangle, border:none)
+    move slice below(background rectangle, arcade backdrop current)
+    set slice visible(lookup slice(sl:map layer 0), false)
+
+    #set parent(arcade backdrop current, map layer zero)
+    #set parent(arcade backdrop current, get hero slice (0))
+
+    # Start the timers (which call themselves)
+    # NOTE/FIXME: I hope timers don't keep calling themselves even after
+    # the map has ended! :p I think that's the case...
+    set timer(update arcade positions timer, 0, 1, @update arcade positions)
+    set timer(arcade animation timer, 0, 20, @arcade bg animations)
+end
+
+
+#FIXME
+# Changes the sunset and seagull sprite to appear animated;
+# both the sunset's reflection and the seagul have two frames
+# of animation.
+script, arcade bg animations, begin
+    if (current backdrop frame == 1) then (
+        replace backdrop sprite(arcade backdrop current, 38)
+    ) else if (current backdrop frame == 2) then (
+        replace backdrop sprite(arcade backdrop current, 39)
+    ) else if (current backdrop frame == 3) then (
+        replace backdrop sprite(arcade backdrop current, 40)
+    ) else if (current backdrop frame == 4) then (
+        replace backdrop sprite(arcade backdrop current, 39)
+        current backdrop frame := 0
+    )
+    current backdrop frame += 1
+
+    set timer(arcade animation timer, 0, 20, @arcade bg animations)
+end
+
+
+# Update the seagul and sunset positions on screen so that
+# the sunset is always in the same place (fixed) and the seagul
+# slowly moves across the screen (parallax-like effect).
+script, update arcade positions, begin
+    # both seagull and sunset must be set every tick
+    put slice screen (arcade backdrop current, 0, 0)
+    # do some math to set x position...
+    set timer(update arcade positions timer, 0, 1, @update arcade positions)
+end
