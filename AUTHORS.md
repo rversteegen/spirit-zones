@@ -112,8 +112,8 @@ fresh looks, I'm so glad they made some monsters!"
 
 What they did:
 
-  * Some monsters for the dark hallway zone. WILL UPDATE LATER WITH MORE
-    DETAILS.
+  * Some monsters for the dark hallway zone: Lostblocks, Booearasite,
+    Gyagnovorph
 
 ## Art SlimeMaid Collaged
 
