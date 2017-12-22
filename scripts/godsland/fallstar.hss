@@ -1,5 +1,6 @@
 plotscript, falling star, begin
     suspend map music
+    intro cutscene()  # intro/introcut.hss
     set hero picture(0, 7, outside battle)
     suspend player
     set NPC obstructs (7, false)

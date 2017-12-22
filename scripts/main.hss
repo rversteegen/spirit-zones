@@ -1,5 +1,8 @@
 include, spirit-zones.hsi
 
+# Intro cut scene
+include, intro/introcut.hss
+
 # Godsland
 include, godsland/god.hss
 include, godsland/sproingy.hss

@@ -58,6 +58,9 @@ Graphic art, namely:
   * The coloring book in the coloring book screens
   * Blacklight carpet pattern, "burn it down," as used in the intro god scene
     background
+  * Neon blacklight zone where there is a wooden walkway that's colorful and
+    it's seemingly suspending above nothing and the walls are painted like
+    starlights
 
 Note from SlimeMaid:
 
@@ -135,6 +138,11 @@ god's realm/intro.
 "Eos." Arno Breker. 1939. Source inspiration for slime shrine statue.
 
 "The Cunning Thief." Paul-Charles Chocarne-Moreau. 1931.
+
+["14inch CRT TV."
+Polyvore.](https://www.polyvore.com/14inch_crt_tv/thing?id=68546364) It's
+used/remixed in the intro cutscene where the protaganists are playing games and
+choke to death on pickles.
 
 ## Sound effects
 

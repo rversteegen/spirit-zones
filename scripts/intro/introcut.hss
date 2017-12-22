@@ -1,0 +1,23 @@
+script, flicker, first backdrop id, second backdrop id, times, duration, begin
+    variable(i)
+    for(i, 1, times) do, begin
+        show backdrop (first backdrop id)
+        wait (duration)
+        show backdrop (second backdrop id)
+        wait (duration)
+    end
+end
+
+
+plotscript, intro cutscene, begin
+    # storyboard part one
+    suspend player
+    flicker(42, 43, 20, 3)
+    flicker(44, 45, 20, 3)
+    show backdrop (46)
+    wait (120)
+    show backdrop (47)
+    wait (90)
+    show backdrop (-1)
+    resume player
+end
