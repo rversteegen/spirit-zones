@@ -5,21 +5,22 @@ global variable (50, steps without hrt)
 
 global variable (4763, pill bar bg slice id)
 global variable (4764, pill bar fg slice id)
+global variable (4765, steps without hrt)
 
 define constant(5, pill ui timer)
-
 
 plotscript, init draw pill bar, begin,
 
     # timer draw pill bar
     #
     #
-    pill bar bg slice id :=  createrect (150, 5, 2)
-    set rect border (pill bar bg slice id, border:line)
-    move slice above (pill bar bg slice id, lookup slice(sl:maproot))
+    pill bar bg slice id :=  createrect (100, 10, 2)
+    set rect border (pill bar bg slice id, border:none)
+    move slice above (pill bar bg slice id, lookup slice(sl:walkabout layer))
 
 
-    pill bar fg slice id :=  createrect (150, 5, 5)
+    pill bar fg slice id :=  createrect (100, 10, 1)
+    set rect border (pill bar fg slice id, border:none)
     move slice above (pill bar fg slice id, pill bar bg slice id)
 
     set timer(pill ui timer, 0, 1, @draw pill bar update)
@@ -28,14 +29,7 @@ end
 
 script, draw pill bar update, begin
     # timer to activate self
-    set slice width (pill bar fg slice id, divide(300 -- steps without hrt, 2))
-    set slice screen x (pill bar fg slice id, 5)
-    set slice screen y (pill bar fg slice id, 185)
-    set slice screen x (pill bar bg slice id, 8)
-    set slice screen y (pill bar bg slice id, 188)
-    set timer(pill ui timer, 0, 1, @draw pill bar update)
 end
-
 
 plotscript, hrt step, begin
     variable (take hrt every x steps)
@@ -48,8 +42,14 @@ plotscript, hrt step, begin
     end, else, begin
         steps without hrt += 1
     end
-end
 
+    variable (steps left)
+    steps left := take hrt every x steps -- steps without hrt
+    #show value(take hrt every x steps -- steps without hrt)
+    show value (steps left / take hrt every x steps * 100)
+
+    pill bar fg slice id :=  createrect (steps left, 10, 2)
+end
 
 plotscript, take hrt, begin
     steps without hrt := 0

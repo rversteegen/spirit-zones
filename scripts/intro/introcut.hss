@@ -10,12 +10,13 @@ end
 
 
 plotscript, intro cutscene, begin
-    # storyboard part one
     suspend player
-    flicker(42, 43, 20, 3)
-    flicker(44, 45, 20, 3)
+    # storyboard part one
+    stop song
+    flicker(42, 43, 20, 2)
+    flicker(44, 45, 20, 2)
     show backdrop (46)
-    wait (120)
+    wait (90)
     show backdrop (47)
     wait (90)
     show backdrop (-1)
