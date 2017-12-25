@@ -30,9 +30,9 @@ script, draw pill bar update, begin
     # timer to activate self
     set slice width (pill bar fg slice id, divide(300 -- steps without hrt, 2))
     set slice screen x (pill bar fg slice id, 5)
-    set slice screen y (pill bar fg slice id, 185)
+    set slice screen y (pill bar fg slice id, 15)
     set slice screen x (pill bar bg slice id, 8)
-    set slice screen y (pill bar bg slice id, 188)
+    set slice screen y (pill bar bg slice id, 18)
     set timer(pill ui timer, 0, 1, @draw pill bar update)
 end
 
