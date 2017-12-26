@@ -65,7 +65,9 @@ script, flashy title, begin
     fade screen out
     show backdrop (-1)
     wait (10)
-    fade screen in
+    # Don't show the map again, we want to jump straight to a different map
+    # (See god conclusion)
+    #fade screen in
     resume player
 end
 
@@ -286,13 +288,8 @@ plotscript, god conclusion, begin
     # I am connected to all...
     show text box (100)
     wait for text box
-    # FIXME: FADEOUT BUG
     flashy title()
-    show backdrop (27)
     wait (32)
-    fade screen out ()
-    use door (2)
-    wait (32)
-    show backdrop (-1)
-    fade screen in ()
+    use door (2)  # Fades screen back in
+    # daisy intro takes over from here
 end
